@@ -547,12 +547,12 @@
                         ctx.font = "20px 'Myriad Pro', Arial, sans-serif"; // Same font size as quotes
                         ctx.fillStyle = "#ffff"; // White color
                         const numberX = nameX; // Align horizontally with the name
-                        const numberY = 670; // Name Y + Name font size (24px) + 30px margin
+                        const numberY = 700; // Name Y + Name font size (24px) + 30px margin
                         ctx.fillText('12', numberX, numberY);
 
                         // Render random 6-digit number on the same line as "12" at x=300
                         const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
-                        const randomNumX = 300; // Specific X position
+                        const randomNumX = 330; // Specific X position
                         const randomNumY = numberY; // Same Y position as "12"
                         ctx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
 
