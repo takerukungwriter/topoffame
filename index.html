@@ -64,16 +64,24 @@
 
         /* Specific position for Q01.png (flush left, center vertically) */
         #q01-img.q-image-left {
-            top: 50%; /* Changed to 50% for vertical center */
+            top: 30%; /* Changed to 30% for vertical position */
             left: 0; /* Flush left */
             transform: translate(0, -50%); /* Vertically center relative to top */
         }
         /* Specific position for Q02.png (flush right, center vertically) */
         #q02-img.q-image-right {
-            top: 50%; /* Changed to 50% for vertical center */
+            top: 30%; /* Changed to 30% for vertical position */
             right: 0; /* Flush right */
             left: auto; /* Ensure no left property conflicts */
             transform: translate(0, -50%); /* Vertically center relative to top */
+        }
+
+        /* Mobile specific style for Q images (higher up) */
+        @media (max-width: 768px) {
+            #q01-img.q-image-left,
+            #q02-img.q-image-right {
+                top: 30%; /* Set to 30% for consistency with top2.png context */
+            }
         }
 
 
@@ -96,7 +104,7 @@
         
         /* New final position for the logo (top2.png) in Phase 3 */
         .teaser-logo.logo-phase3-final {
-            top: 20%; /* Move up 30% from its default 50% position (viewport height) */
+            top: 30%; /* Changed from 20% to 30% to match new Q position */
             z-index: 11; /* Ensure it's on top of man images in final state */
         }
 
