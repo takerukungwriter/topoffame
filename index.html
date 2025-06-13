@@ -427,13 +427,13 @@
                 man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
                 man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
                 
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Display for 1 seconds
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Display for 1 seconds
 
                 // After the entire teaser animation finishes, hide the teaser and show the main site
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Final wait before transition
+
                 teaserWrapper.style.opacity = '0'; // Start fading out teaser wrapper
                 authorCredit.style.opacity = '0'; // Start fading out author credit
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for fade out to complete
+        
                 teaserWrapper.style.display = 'none'; // Hide the teaser wrapper completely
                 authorCredit.style.display = 'none'; // Hide author credit completely
                 mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
@@ -547,7 +547,7 @@
                         ctx.font = "20px 'Myriad Pro', Arial, sans-serif"; // Same font size as quotes
                         ctx.fillStyle = "#ffff"; // White color
                         const numberX = nameX; // Align horizontally with the name
-                        const numberY = nameY = 700; // Name Y + Name font size (24px) + 30px margin
+                        const numberY = 700; // Name Y + Name font size (24px) + 30px margin
                         ctx.fillText('12', numberX, numberY);
 
                         // Render random 6-digit number on the same line as "12" at x=300
@@ -555,6 +555,7 @@
                         const randomNumX = 300; // Specific X position
                         const randomNumY = numberY; // Same Y position as "12"
                         ctx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
+
 
                         // Quote rendering (moved below name and aligned left with name, with 60px spacing)
                         const quotes = [
