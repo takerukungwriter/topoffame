@@ -85,7 +85,7 @@
             left: 50%; /* Center horizontally */
             transform: translate(-50%, -50%); /* Adjust to truly center the element */
             width: 100%;
-            max-width: 400px; /* Max width for logo */
+            max-width: 400px; /* Max width for logo - Desktop */
             height: auto;
             opacity: 0;
             transition: opacity 1.5s ease-out, top 1s ease-in-out, transform 1s ease-in-out; 
@@ -100,6 +100,13 @@
             z-index: 11; /* Ensure it's on top of man images in final state */
         }
 
+        /* Mobile specific style for logo */
+        @media (max-width: 768px) { /* Adjust breakpoint as needed, Tailwind's 'md' is 768px */
+            .teaser-logo {
+                max-width: 200px; /* 50% reduction for mobile (400px * 0.5 = 200px) */
+            }
+        }
+
 
         /* Base style for man1.png and man2.png */
         .teaser-man-image {
@@ -111,7 +118,7 @@
             height: auto;
             opacity: 0;
             /* Default scale to 80% from original, applies immediately on show */
-            transform: scale(0.8);
+            transform: scale(0.8); /* Desktop default scale */
             /* Crucial: Scales from the bottom edge for initial scaling and ensures bottom alignment */
             transform-origin: 50% 100%; 
             /* Added all relevant transform properties for smooth transition */
@@ -122,41 +129,55 @@
 
         /* Man1.png in Phase 1: Right side, 80% scale (already default scale) */
         #man1-img.man1-phase1-start {
-            right: 0%; /* Flush right of the container */
+            right: 0%; /* Flush right of the container - Desktop */
             left: auto; /* Ensure no left property conflict */
-            /* transform: scale(0.8); is now in base class */
             z-index: 9; /* Ensure man1 is above man2 */
         }
 
         /* Man2.png in Phase 2: Left side, 80% scale (already default scale) */
         #man2-img.man2-phase2-start {
-            left: 0%; /* Flush left of the container */
+            left: 0%; /* Flush left of the container - Desktop */
             right: auto; /* Ensure no right property conflict */
-            /* transform: scale(0.8); is now in base class */
             z-index: 8; /* Behind man1 */
         }
 
         /* Man1.png in Phase 2: Moves left 10% (from its right-aligned position) */
         #man1-img.man1-phase2-move {
-            right: 20%; /* Changed from 10% to 20% to move left an additional 10% */
-            /* transform: scale(0.8); is now in base class */
+            right: 20%; /* Move 10% left from the right edge of the container - Desktop */
             z-index: 9; /* Remains above man2 */
         }
 
         /* New: Man1.png in Phase 3: Moves back to initial rightmost position (reverts to phase1 position) */
         #man1-img.man1-phase3-reset {
-            right: 0%; /* Back to original right edge */
+            right: 0%; /* Back to original right edge - Desktop */
             left: auto;
-            /* transform: scale(0.8); is in base class */
             z-index: 9;
         }
 
         /* New: Man2.png in Phase 3: Increases size by 20% (to 96%) and moves right 10% */
         #man2-img.man2-phase3-final {
-            left: 10%; /* Moves 10% right from its starting left edge */
+            left: 10%; /* Moves 10% right from its starting left edge - Desktop */
             right: auto; /* Ensure no right conflict */
-            transform: scale(0.86); /* Changed scale from 0.96 to 0.86 */
+            transform: scale(0.86); /* Desktop scale */
             z-index: 8;
+        }
+
+        /* Mobile specific styles for Man1.png and Man2.png */
+        @media (max-width: 768px) {
+            #man1-img.man1-phase1-start,
+            #man1-img.man1-phase2-move,
+            #man1-img.man1-phase3-reset {
+                transform: scale(1); /* 100% on mobile */
+                right: 0; /* Man1 always flush right on mobile */
+                left: auto; /* Ensure no left conflict */
+            }
+
+            #man2-img.man2-phase2-start,
+            #man2-img.man2-phase3-final {
+                transform: scale(1); /* 100% on mobile */
+                left: 0; /* Man2 always flush left on mobile */
+                right: auto; /* Ensure no right conflict */
+            }
         }
 
 
