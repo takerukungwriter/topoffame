@@ -433,7 +433,6 @@
                 await new Promise(resolve => setTimeout(resolve, 1000)); // Final wait before transition
                 teaserWrapper.style.opacity = '0'; // Start fading out teaser wrapper
                 authorCredit.style.opacity = '0'; // Start fading out author credit
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for fade out to complete
                 teaserWrapper.style.display = 'none'; // Hide the teaser wrapper completely
                 authorCredit.style.display = 'none'; // Hide author credit completely
                 mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
@@ -555,7 +554,7 @@
                         ctx.font = "20px 'Myriad Pro', Arial, sans-serif";
                         ctx.fillStyle = "#ffff";
                         const quoteX = nameX; // Align horizontally with the name
-                        const quoteY = nameY + 24 + 10; // Name Y + Name font size (24px) + 10px margin
+                        const quoteY = nameY + 24 + 30; // Name Y + Name font size (24px) + 10px margin
                         ctx.fillText(randomQuote, quoteX, quoteY);
                     };
                     photo.src = event.target.result;
