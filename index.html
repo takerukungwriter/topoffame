@@ -391,7 +391,7 @@
                 man2Img.classList.add('show', 'man2-phase2-start'); 
                 man1Img.classList.remove('man1-phase1-start'); // Remove previous position class for man1
                 man1Img.classList.add('man1-phase2-move'); // Apply new position class for man1
-                await new Promise(resolve => setTimeout(resolve, 2500)); // Display for 2.5 seconds
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Display for 2.5 seconds
                 
                 // Hide Q02.png after its display time
                 q02Img.classList.remove('show'); 
@@ -411,7 +411,7 @@
                 man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
                 man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
                 
-                await new Promise(resolve => setTimeout(resolve, 3000)); // Display for 3 seconds
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Display for 3 seconds
 
                 // After the entire teaser animation finishes, hide the teaser and show the main site
                 await new Promise(resolve => setTimeout(resolve, 2000)); // Final wait before transition
