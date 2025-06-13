@@ -174,7 +174,7 @@
         #man2-img.man2-phase2-start {
             left: 0%; /* Flush left of the container - Desktop */
             right: auto; /* Ensure no right property conflict */
-            transform: scale(0.86); /* Desktop scale */
+            transform: scale(0.80); /* Desktop scale */
             z-index: 8; /* Behind man1 */
         }
 
@@ -427,13 +427,13 @@
                 man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
                 man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
                 
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Display for 1 seconds
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Display for 1 seconds
 
                 // After the entire teaser animation finishes, hide the teaser and show the main site
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Final wait before transition
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Final wait before transition
                 teaserWrapper.style.opacity = '0'; // Start fading out teaser wrapper
                 authorCredit.style.opacity = '0'; // Start fading out author credit
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for fade out to complete
+
                 teaserWrapper.style.display = 'none'; // Hide the teaser wrapper completely
                 authorCredit.style.display = 'none'; // Hide author credit completely
                 mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
