@@ -175,7 +175,7 @@
             #man2-img.man2-phase2-start,
             #man2-img.man2-phase3-final {
                 transform: scale(1.8); /* 100% on mobile */
-                left: 0; /* Man2 always flush left on mobile */
+                left: 1; /* Man2 always flush left on mobile */
                 right: auto; /* Ensure no right conflict */
             }
         }
@@ -477,7 +477,7 @@
                         const frameX = centerX - frameW / 2;
                         const frameY = centerY - frameH / 2;
 
-                        const ratio = Math.min(frameW / photo.width, photo.height);
+                        const ratio = Math.min(frameW / photo.width, frameH / photo.height);
                         const newW = photo.width * ratio;
                         const newH = photo.height * ratio;
                         const offsetX = frameX + (frameW - newW) / 2;
