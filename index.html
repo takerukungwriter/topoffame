@@ -411,10 +411,10 @@
                 man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
                 man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
                 
-                await new Promise(resolve => setTimeout(resolve, 2000)); // Display for 3 seconds
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Display for 3 seconds
 
                 // After the entire teaser animation finishes, hide the teaser and show the main site
-                await new Promise(resolve => setTimeout(resolve, 2000)); // Final wait before transition
+                await new Promise(resolve => setTimeout(resolve, 1500)); // Final wait before transition
                 teaserWrapper.style.display = 'none'; // Hide the teaser wrapper
                 mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
                 bodyElement.classList.add('main-site-visible'); // Add class to body for main site specific background/font
