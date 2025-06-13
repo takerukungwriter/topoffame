@@ -171,7 +171,7 @@
 
         /* This class is added to body when main site is visible */
         body.main-site-visible {
-            background-image: url('bg.jpg'), linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Use bg.jpg, with a fallback gradient */
+            background-image: url('BG.jpg'), linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Use BG.jpg, with a fallback gradient */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat; /* No repeat for background image */
@@ -255,8 +255,8 @@
             <img id="logo-img" class="teaser-logo" src="top2.png" onerror="this.onerror=null;this.src='https://placehold.co/400x200/CCCCCC/000000?text=Top+of+Fame+Logo';" alt="">
 
             <!-- man1.png and man2.png -->
-            <img id="man1-img" class="teaser-man-image" src="man1.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/666666/FFFFFF?text=Man1+Image';" alt="">
-            <img id="man2-img" class="teaser-man-image" src="man2.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/444444/FFFFFF?text=Man2+Image';" alt="">
+            <img id="man1-img" class="teaser-man-image" src="Man1.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/666666/FFFFFF?text=Man1+Image';" alt="">
+            <img id="man2-img" class="teaser-man-image" src="Man2.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/444444/FFFFFF?text=Man2+Image';" alt="">
         </div>
     </div>
 
@@ -456,7 +456,7 @@
                         const frameX = centerX - frameW / 2;
                         const frameY = centerY - frameH / 2;
 
-                        const ratio = Math.min(frameW / photo.width, frameH / photo.height);
+                        const ratio = Math.min(frameW / photo.width, photo.height);
                         const newW = photo.width * ratio;
                         const newH = photo.height * ratio;
                         const offsetX = frameX + (frameW - newW) / 2;
