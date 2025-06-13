@@ -113,7 +113,7 @@
             display: block;
             position: absolute;
             bottom: 0; /* Always stick to the bottom */
-            width: 100%;
+            width: 80%;
             max-width: 1000px; /* Max width for man images */
             height: auto;
             opacity: 0;
@@ -167,14 +167,14 @@
             #man1-img.man1-phase1-start,
             #man1-img.man1-phase2-move,
             #man1-img.man1-phase3-reset {
-                transform: scale(1); /* 100% on mobile */
+                transform: scale(60); /* 100% on mobile */
                 right: 0; /* Man1 always flush right on mobile */
                 left: auto; /* Ensure no left conflict */
             }
 
             #man2-img.man2-phase2-start,
             #man2-img.man2-phase3-final {
-                transform: scale(1); /* 100% on mobile */
+                transform: scale(60); /* 100% on mobile */
                 left: 0; /* Man2 always flush left on mobile */
                 right: auto; /* Ensure no right conflict */
             }
@@ -236,12 +236,12 @@
             padding: 10px;
             font-size: 16px;
             border-radius: 8px;
-            border: 1px solid #388E3C;
+            border: 1px solid #ffffff;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #ffffff;
             color: white;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
