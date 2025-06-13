@@ -139,7 +139,7 @@
                 max-width: 200px; /* 50% reduction for mobile (400px * 0.5 = 200px) */
             }
              .teaser-logo.logo-phase3-final {
-                top: 20%; /* Moved up 10% from previous 20% for consistency with Q images */
+                top: 10%; /* Moved up 10% from previous 20% for consistency with Q images */
             }
         }
 
@@ -202,7 +202,7 @@
         /* Mobile specific styles for Man1.png and Man2.png (max-width: 767px to affect phones only, not iPads) */
         @media (max-width: 767px) { /* Adjusted breakpoint for mobile phones */
             .teaser-man-image { /* Apply width: 100% to the base man image class on mobile to ensure full width */
-                width: 80%; /* Use 100% of parent width */
+                width: 100%; /* Use 100% of parent width */
                 max-width: none; /* Remove max-width constraint for mobile */
             }
             #man1-img.man1-phase1-start,
@@ -427,13 +427,13 @@
                 man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
                 man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
                 
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Display for 1 seconds
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Display for 1 seconds
 
                 // After the entire teaser animation finishes, hide the teaser and show the main site
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Final wait before transition
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Final wait before transition
                 teaserWrapper.style.opacity = '0'; // Start fading out teaser wrapper
                 authorCredit.style.opacity = '0'; // Start fading out author credit
-
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for fade out to complete
                 teaserWrapper.style.display = 'none'; // Hide the teaser wrapper completely
                 authorCredit.style.display = 'none'; // Hide author credit completely
                 mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
@@ -536,6 +536,14 @@
 
                         ctx.drawImage(photo, offsetX, offsetY, newW, newH);
 
+                        // Name rendering
+                        ctx.font = "24px 'Myriad Pro', Arial, sans-serif";
+                        ctx.fillStyle = "#ffff";
+                        const nameX = 184; // Horizontal position for the name
+                        const nameY = 592.8; // Vertical position for the name
+                        ctx.fillText(name, nameX, nameY);
+
+                        // Quote rendering (moved below name and aligned left with name)
                         const quotes = [
                             "best of luck",
                             "dungeoun dragon",
@@ -546,14 +554,9 @@
 
                         ctx.font = "20px 'Myriad Pro', Arial, sans-serif";
                         ctx.fillStyle = "#ffff";
-                        const textWidth = ctx.measureText(randomQuote).width;
-                        const quoteX = (canvas.width - textWidth) / 2;
-                        const quoteY = 552;
+                        const quoteX = nameX; // Align horizontally with the name
+                        const quoteY = nameY + 24 + 10; // Name Y + Name font size (24px) + 10px margin
                         ctx.fillText(randomQuote, quoteX, quoteY);
-
-                        ctx.font = "24px 'Myriad Pro', Arial, sans-serif";
-                        ctx.fillStyle = "#ffff";
-                        ctx.fillText(name, 184, 592.8);
                     };
                     photo.src = event.target.result;
                 };
