@@ -33,6 +33,22 @@
             background: linear-gradient(135deg, #000000, #333333, #000000);
         }
 
+        /* New style for author credit text */
+        .author-credit {
+            position: fixed; /* Fixed position relative to viewport */
+            top: 10px; /* 10px from the top */
+            left: 50%; /* Start from 50% from the left */
+            transform: translateX(-50%); /* Adjust to center horizontally */
+            font-size: 0.75rem; /* Small font size */
+            color: #B0B0B0; /* Greyish color */
+            z-index: 1001; /* Above other teaser elements */
+            transition: opacity 1s ease-out; /* Smooth fade out with teaser */
+            text-align: center; /* Ensure text is centered within its own div */
+            width: 100%; /* Take full width to center effectively */
+            padding: 0 10px; /* Small padding to prevent text from touching screen edges */
+            box-sizing: border-box; /* Include padding in width */
+        }
+
         .teaser-container {
             text-align: center;
             padding: 1.5rem; /* Responsive padding */
@@ -89,7 +105,7 @@
         @media (max-width: 767px) { /* Adjusted breakpoint for mobile phones (iPad will be desktop) */
             #q01-img.q-image-left,
             #q02-img.q-image-right {
-                top: 20%; /* Moved up 10% from previous 30% */
+                top: 10%; /* Moved up 10% from previous 20% (now 10% from original 30%) */
             }
         }
 
@@ -121,12 +137,10 @@
         @media (max-width: 767px) { /* Adjusted breakpoint for mobile phones (iPad will be desktop) */
             .teaser-logo {
                 max-width: 200px; /* 50% reduction for mobile (400px * 0.5 = 200px) */
-                top: 10%; /* Moved up 10% from previous 30% for consistency with Q images */
             }
              .teaser-logo.logo-phase3-final {
-            max-width: 200px; /* 50% reduction for mobile (400px * 0.5 = 200px) */
-                top: 20%; /* Moved up 10% from previous 30% for consistency with Q images */
-        }
+                top: 10%; /* Moved up 10% from previous 20% for consistency with Q images */
+            }
         }
 
 
@@ -187,8 +201,8 @@
 
         /* Mobile specific styles for Man1.png and Man2.png (max-width: 767px to affect phones only, not iPads) */
         @media (max-width: 767px) { /* Adjusted breakpoint for mobile phones */
-            .teaser-man-image { /* Apply width: 100vw to the base man image class on mobile to prevent cropping */
-                width: 80vw; /* Use viewport width to ensure full width without cropping */
+            .teaser-man-image { /* Apply width: 100% to the base man image class on mobile to ensure full width */
+                width: 100%; /* Use 100% of parent width */
                 max-width: none; /* Remove max-width constraint for mobile */
             }
             #man1-img.man1-phase1-start,
@@ -200,13 +214,13 @@
             }
 
             #man2-img.man2-phase2-start { /* Phase 2 mobile specific for Man2.png */
-                transform: translate(-70%, 0) scale(1.98); /* Move 20% right relative to center and scale */
-                left: 80%; /* Start from 50% then translateX adjusts */
+                transform: translateX(-50%) scale(2.178); /* Center based on its own width and new scale */
+                left: 70%; /* Move its anchor point to 70% from left */
                 right: auto; /* Ensure no conflict */
             }
             #man2-img.man2-phase3-final { /* Phase 3 mobile specific for Man2.png */
-                transform: translate(-70%, 0) scale(1.98); /* Consistent with Phase 2 mobile */
-                left: 80%; /* Start from 50% then translateX adjusts */
+                transform: translateX(-50%) scale(2.178); /* Consistent with Phase 2 mobile */
+                left: 70%; /* Move its anchor point to 70% from left */
                 right: auto; /* Ensure no conflict */
             }
         }
@@ -298,6 +312,7 @@
 <body>
     <!-- Teaser Section - This will be displayed first -->
     <div id="teaser-wrapper">
+        <div id="author-credit" class="author-credit">นิยายวายแฟนตาซี ©takerukungwriter</div>
         <div class="teaser-container">
             <!-- Teaser images -->
             <img id="q01-img" class="teaser-image" src="Q01.png" onerror="this.onerror=null;this.src='https://placehold.co/600x150/FF0000/FFFFFF?text=Q01+Image';" alt="">
@@ -350,6 +365,7 @@
             const logoImg = document.getElementById('logo-img'); // Main teaser logo image (top2.png)
             const man1Img = document.getElementById('man1-img'); // man1.png image
             const man2Img = document.getElementById('man2-img'); // man2.png image
+            const authorCredit = document.getElementById('author-credit'); // Author credit text
 
             /**
              * Helper function to remove multiple classes from an element.
@@ -391,7 +407,7 @@
                 man2Img.classList.add('show', 'man2-phase2-start'); 
                 man1Img.classList.remove('man1-phase1-start'); // Remove previous position class for man1
                 man1Img.classList.add('man1-phase2-move'); // Apply new position class for man1
-                await new Promise(resolve => setTimeout(resolve, 2000)); // Display for 2.5 seconds
+                await new Promise(resolve => setTimeout(resolve, 2500)); // Display for 2.5 seconds
                 
                 // Hide Q02.png after its display time
                 q02Img.classList.remove('show'); 
@@ -411,11 +427,15 @@
                 man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
                 man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
                 
-                await new Promise(resolve => setTimeout(resolve, 1000)); // Display for 3 seconds
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Display for 1 seconds
 
                 // After the entire teaser animation finishes, hide the teaser and show the main site
                 await new Promise(resolve => setTimeout(resolve, 1000)); // Final wait before transition
-                teaserWrapper.style.display = 'none'; // Hide the teaser wrapper
+                teaserWrapper.style.opacity = '0'; // Start fading out teaser wrapper
+                authorCredit.style.opacity = '0'; // Start fading out author credit
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for fade out to complete
+                teaserWrapper.style.display = 'none'; // Hide the teaser wrapper completely
+                authorCredit.style.display = 'none'; // Hide author credit completely
                 mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
                 bodyElement.classList.add('main-site-visible'); // Add class to body for main site specific background/font
                 console.log('Teaser finished, main site displayed.');
