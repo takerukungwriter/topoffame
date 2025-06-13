@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top of Fame & Crimsonwood Registrar’s Bureau</title>
+    <!-- Link to Tailwind CSS CDN for basic styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for Teaser, Sarabun for Main Site -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Common styles for the entire page */
+        body {
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        /* Teaser specific styles */
+        #teaser-wrapper {
+            font-family: 'Inter', sans-serif; /* Font for teaser */
+            background-color: #000000; /* Dark background for teaser */
+            color: #E0E0E0; /* Light text color for teaser */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Teaser takes full viewport height */
+            width: 100vw; /* Teaser takes full viewport width */
+            position: fixed; /* Fix teaser over content */
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure teaser is on top of everything */
+            /* Updated background: black with dark grey gradient */
+            background: linear-gradient(135deg, #000000, #333333, #000000);
+        }
+
+        .teaser-container {
+            text-align: center;
+            padding: 1.5rem; /* Responsive padding */
+            max-width: 90%; /* Max width for larger screens */
+            width: 100%; /* Full width on smaller screens */
+            box-sizing: border-box; /* Include padding in width calculation */
+            position: relative; /* Crucial for absolute positioning of child images */
+            display: flex; /* Using flex to center content within this container */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Make sure it takes up enough space for absolute positioning */
+            overflow: hidden; /* Hide overflow if images temporarily go out of bounds during scaling */
+        }
+
+        /* Style for the main teaser images (Q01.png, Q02.png) */
+        .teaser-image {
+            display: block; /* Ensures the element takes up space and allows setting dimensions */
+            position: absolute;
+            width: 100%;
+            max-width: 600px; /* Max width for these images */
+            height: auto;
+            opacity: 0;
+            /* Transition for opacity only, position changes handled by specific classes */
+            transition: opacity 1s ease-out; 
+            border-radius: 10px;
+            z-index: 10; /* Ensure it's above man images initially */
+        }
+        .teaser-image.show { opacity: 1; }
+
+        /* Specific position for Q01.png (flush left, center vertically) */
+        #q01-img.q-image-left {
+            top: 50%; /* Changed to 50% for vertical center */
+            left: 0; /* Flush left */
+            transform: translate(0, -50%); /* Vertically center relative to top */
+        }
+        /* Specific position for Q02.png (flush right, center vertically) */
+        #q02-img.q-image-right {
+            top: 50%; /* Changed to 50% for vertical center */
+            right: 0; /* Flush right */
+            left: auto; /* Ensure no left property conflicts */
+            transform: translate(0, -50%); /* Vertically center relative to top */
+        }
+
+
+        /* Style for the main logo image in teaser (top2.png) */
+        .teaser-logo {
+            display: block;
+            position: absolute;
+            top: 50%; /* Default center position */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust to truly center the element */
+            width: 100%;
+            max-width: 400px; /* Max width for logo */
+            height: auto;
+            opacity: 0;
+            transition: opacity 1.5s ease-out, top 1s ease-in-out, transform 1s ease-in-out; 
+            border-radius: 10px;
+            z-index: 10; /* Ensure it's above man images initially */
+        }
+        .teaser-logo.show { opacity: 1; }
+        
+        /* New final position for the logo (top2.png) in Phase 3 */
+        .teaser-logo.logo-phase3-final {
+            top: 20%; /* Move up 30% from its default 50% position (viewport height) */
+            z-index: 11; /* Ensure it's on top of man images in final state */
+        }
+
+
+        /* Base style for man1.png and man2.png */
+        .teaser-man-image {
+            display: block;
+            position: absolute;
+            bottom: 0; /* Always stick to the bottom */
+            width: 100%;
+            max-width: 1000px; /* Max width for man images */
+            height: auto;
+            opacity: 0;
+            /* Default scale to 80% from original, applies immediately on show */
+            transform: scale(0.8);
+            /* Crucial: Scales from the bottom edge for initial scaling and ensures bottom alignment */
+            transform-origin: 50% 100%; 
+            /* Added all relevant transform properties for smooth transition */
+            transition: opacity 1s ease-out, transform 1s ease-in-out, left 1s ease-in-out, right 1s ease-in-out, top 1s ease-in-out;
+            z-index: 8; /* Default z-index, man1 will be higher */
+        }
+        .teaser-man-image.show { opacity: 1; }
+
+        /* Man1.png in Phase 1: Right side, 80% scale (already default scale) */
+        #man1-img.man1-phase1-start {
+            right: 0%; /* Flush right of the container */
+            left: auto; /* Ensure no left property conflict */
+            /* transform: scale(0.8); is now in base class */
+            z-index: 9; /* Ensure man1 is above man2 */
+        }
+
+        /* Man2.png in Phase 2: Left side, 80% scale (already default scale) */
+        #man2-img.man2-phase2-start {
+            left: 0%; /* Flush left of the container */
+            right: auto; /* Ensure no right property conflict */
+            /* transform: scale(0.8); is now in base class */
+            z-index: 8; /* Behind man1 */
+        }
+
+        /* Man1.png in Phase 2: Moves left 10% (from its right-aligned position) */
+        #man1-img.man1-phase2-move {
+            right: 20%; /* Changed from 10% to 20% to move left an additional 10% */
+            /* transform: scale(0.8); is now in base class */
+            z-index: 9; /* Remains above man2 */
+        }
+
+        /* New: Man1.png in Phase 3: Moves back to initial rightmost position (reverts to phase1 position) */
+        #man1-img.man1-phase3-reset {
+            right: 0%; /* Back to original right edge */
+            left: auto;
+            /* transform: scale(0.8); is in base class */
+            z-index: 9;
+        }
+
+        /* New: Man2.png in Phase 3: Increases size by 20% (to 96%) and moves right 10% */
+        #man2-img.man2-phase3-final {
+            left: 10%; /* Moves 10% right from its starting left edge */
+            right: auto; /* Ensure no right conflict */
+            transform: scale(0.86); /* Changed scale from 0.96 to 0.86 */
+            z-index: 8;
+        }
+
+
+        /* Main site specific styles */
+        #main-site-wrapper {
+            display: none; /* Hidden by default, will be shown after teaser */
+            padding-top: 20px; /* Top padding for the main content */
+            min-height: 100vh; /* Ensure it takes full height when visible */
+            font-family: 'Sarabun', sans-serif; /* Default font for main site */
+            text-align: center; /* Center text for main site */
+        }
+
+        /* This class is added to body when main site is visible */
+        body.main-site-visible {
+            background-image: url('bg.jpg'), linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Use bg.jpg, with a fallback gradient */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat; /* No repeat for background image */
+            background-attachment: fixed; /* Keep background fixed when scrolling */
+            color: white; /* White text for main site */
+        }
+        /* New style for the main site headline image */
+        .main-headline-logo {
+            display: block;
+            margin: 20px auto 0;
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 10px;
+        }
+        /* New style for the main site footer image */
+        .main-footer-image {
+            display: block;
+            margin: 20px auto 40px;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 534px;
+            height: 800px;
+            max-width: 95%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        input, button {
+            margin: 10px 15px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #388E3C;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="file"] {
+            background-color: transparent;
+            color: white;
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        input[type="text"] {
+            color: black;
+            background-color: white;
+            border: 1px solid #ddd;
+            width: calc(100% - 20px);
+            max-width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Teaser Section - This will be displayed first -->
+    <div id="teaser-wrapper">
+        <div class="teaser-container">
+            <!-- Teaser images -->
+            <img id="q01-img" class="teaser-image" src="Q01.png" onerror="this.onerror=null;this.src='https://placehold.co/600x150/FF0000/FFFFFF?text=Q01+Image';" alt="">
+            <img id="q02-img" class="teaser-image" src="Q02.png" onerror="this.onerror=null;this.src='https://placehold.co/600x150/FF0000/FFFFFF?text=Q02+Image';" alt="">
+
+            <!-- Main Teaser logo image -->
+            <img id="logo-img" class="teaser-logo" src="top2.png" onerror="this.onerror=null;this.src='https://placehold.co/400x200/CCCCCC/000000?text=Top+of+Fame+Logo';" alt="">
+
+            <!-- man1.png and man2.png -->
+            <img id="man1-img" class="teaser-man-image" src="man1.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/666666/FFFFFF?text=Man1+Image';" alt="">
+            <img id="man2-img" class="teaser-man-image" src="man2.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/444444/FFFFFF?text=Man2+Image';" alt="">
+        </div>
+    </div>
+
+    <!-- Main Site Section - This will be hidden initially -->
+    <div id="main-site-wrapper">
+        <!-- Logo image with fallback -->
+        <img src="logo.png" onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=Logo';" alt="" style="display:block; margin: 20px auto 0; width:200px; border-radius: 10px;">
+        
+        <!-- Headline image replacing text H1 and H2 -->
+        <img src="headline.png" class="main-headline-logo" onerror="this.onerror=null;this.src='https://placehold.co/600x100/FF0000/FFFFFF?text=Crimsonwood+Headline';" alt="">
+
+        <br><span class="description-text">อัพโหลดรูปภาพเพื่อลงทะเบียน</span>
+        <br><input type="file" id="photoInput" accept="image/*"><br>
+        <input type="text" id="nameInput" placeholder="ใส่ชื่อนักเรียน"><br>
+
+        <button onclick="generateCard()">ทำบัตร</button>
+        <button onclick="downloadCard()">Download</button><br>
+
+        <br>
+        <br>
+
+        <canvas id="idCanvas" width="534" height="800"></canvas>
+
+        <!-- New: Footer image below the canvas -->
+        <img src="foot.png" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Footer';" alt="">
+    </div>
+
+    <script>
+        // JavaScript for Teaser animation and controlling visibility
+        window.onload = function() {
+            // Get references to teaser and main site wrappers
+            const teaserWrapper = document.getElementById('teaser-wrapper');
+            const mainSiteWrapper = document.getElementById('main-site-wrapper');
+            const bodyElement = document.body; // Reference to the body element
+
+            // Get references to teaser images
+            const q01Img = document.getElementById('q01-img'); // Teaser image Q01.png
+            const q02Img = document.getElementById('q02-img'); // Teaser image Q02.png
+            const logoImg = document.getElementById('logo-img'); // Main teaser logo image (top2.png)
+            const man1Img = document.getElementById('man1-img'); // man1.png image
+            const man2Img = document.getElementById('man2-img'); // man2.png image
+
+            /**
+             * Helper function to remove multiple classes from an element.
+             * @param {HTMLElement} element - The DOM element.
+             * @param {string[]} classes - An array of class names to remove.
+             */
+            function removeClasses(element, classes) {
+                classes.forEach(cls => element.classList.remove(cls));
+            }
+
+            /**
+             * Controls the sequence of showing and hiding teaser elements.
+             * Uses async/await for better control over animation timing.
+             */
+            async function animateTeaser() {
+                // Ensure Q images are completely hidden from the start
+                q01Img.style.display = 'none';
+                q02Img.style.display = 'none';
+                q01Img.classList.remove('show', 'q-image-left'); // Remove any lingering classes
+                q02Img.classList.remove('show', 'q-image-right'); // Remove any lingering classes
+
+                // Phase 1: Show Q01.png (mid-left) and Man1.png (right, scaled) simultaneously
+                q01Img.style.display = 'block'; // Make it display to apply opacity transition
+                q01Img.classList.add('show', 'q-image-left'); 
+                man1Img.classList.add('show', 'man1-phase1-start');
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Display for 2 seconds
+                
+                // Hide Q01.png after its display time
+                q01Img.classList.remove('show'); // Start opacity fade-out
+                // Wait for a very short moment to allow fade-out to start visually, then hide completely
+                await new Promise(resolve => setTimeout(() => { 
+                    q01Img.style.display = 'none'; // Completely remove from layout
+                    resolve();
+                }, 100)); // Short delay to allow visual fade start, then disappear
+
+                // Phase 2: Show Q02.png (mid-right), Man2.png appears (left, scaled), Man1.png moves left
+                q02Img.style.display = 'block'; // Make it display to apply opacity transition
+                q02Img.classList.add('show', 'q-image-right'); 
+                man2Img.classList.add('show', 'man2-phase2-start'); 
+                man1Img.classList.remove('man1-phase1-start'); // Remove previous position class for man1
+                man1Img.classList.add('man1-phase2-move'); // Apply new position class for man1
+                await new Promise(resolve => setTimeout(resolve, 2500)); // Display for 2.5 seconds
+                
+                // Hide Q02.png after its display time
+                q02Img.classList.remove('show'); 
+                // Wait for a very short moment to allow fade-out to start visually, then hide completely
+                await new Promise(resolve => setTimeout(() => {
+                    q02Img.style.display = 'none'; // Completely remove from layout
+                    resolve();
+                }, 100)); // Short delay to allow visual fade start, then disappear
+
+                // Phase 3: Show main logo (top2.png), Man1 moves back to rightmost, Man2 changes size and moves right
+                logoImg.classList.add('show', 'logo-phase3-final');
+                // Man1 moves back to rightmost
+                man1Img.classList.remove('man1-phase2-move'); // Remove phase 2 movement class
+                man1Img.classList.add('man1-phase3-reset'); // Apply phase 3 reset to rightmost
+
+                // Man2 increases size and moves right
+                man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
+                man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
+                
+                await new Promise(resolve => setTimeout(resolve, 3000)); // Display for 3 seconds
+
+                // After the entire teaser animation finishes, hide the teaser and show the main site
+                await new Promise(resolve => setTimeout(resolve, 2000)); // Final wait before transition
+                teaserWrapper.style.display = 'none'; // Hide the teaser wrapper
+                mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
+                bodyElement.classList.add('main-site-visible'); // Add class to body for main site specific background/font
+                console.log('Teaser finished, main site displayed.');
+
+                // Initialize canvas and its elements after the main site becomes visible
+                initializeMainSiteCanvas();
+            }
+
+            /**
+             * Helper function to show an element (phrase or image) and then hide it after a duration.
+             * @param {HTMLElement} element - The DOM element to show.
+             * @param {number} duration - How long the element should be visible in milliseconds.
+             * @returns {Promise<void>} A promise that resolves after the element is hidden.
+             */
+            function showElement(element, duration) {
+                return new Promise(resolve => {
+                    element.classList.add('show'); // Add 'show' class to trigger CSS animation (opacity fade-in)
+                    setTimeout(() => {
+                        element.classList.remove('show'); // Remove 'show' class to hide the element (opacity fade-out)
+                        resolve();
+                    }, duration);
+                });
+            }
+
+            // References and functions for the main site's Canvas operations
+            const canvas = document.getElementById('idCanvas');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+
+            const template = new Image();
+            template.src = 'idcard.jpg';
+            template.onerror = () => {
+                console.error("Failed to load idcard.jpg. Please ensure the file exists in the same directory.");
+                if (ctx) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = "#FF0000";
+                    ctx.font = "30px Arial";
+                    ctx.fillText("Template Load Error!", 50, 200);
+                }
+            };
+
+
+            /**
+             * Initializes the main site's canvas elements.
+             * This function is called after the teaser finishes and the main site becomes visible.
+             */
+            function initializeMainSiteCanvas() {
+                if (!ctx) {
+                    console.error('Canvas or its 2D context is not available. Cannot initialize canvas.');
+                    return;
+                }
+
+                template.onload = () => {
+                    ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+                };
+
+                if (template.complete) {
+                    ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+                }
+            }
+
+
+            /**
+             * Generates the ID card on the canvas based on user input and photo.
+             * This function is globally accessible for the button's onclick.
+             */
+            window.generateCard = function() {
+                const name = document.getElementById('nameInput').value;
+                const photoInput = document.getElementById('photoInput');
+                const photoFile = photoInput.files[0];
+
+                if (!photoFile) {
+                    console.warn("No photo selected. Please upload an image to generate the card.");
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const photo = new Image();
+                    photo.onload = function () {
+                        if (!ctx) return;
+
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+
+                        // Define parameters for student photo frame - ADJUSTED FOR NEW 534x800 TEMPLATE
+                        const frameW = 237.152; /* 296.44 * 0.8 */
+                        const frameH = 355.2; /* 444 * 0.8 */
+                        const centerX = 266.8; /* 333.5 * 0.8 */
+                        const centerY = 355.2; /* 444 * 0.8 */
+                        const frameX = centerX - frameW / 2;
+                        const frameY = centerY - frameH / 2;
+
+                        const ratio = Math.min(frameW / photo.width, frameH / photo.height);
+                        const newW = photo.width * ratio;
+                        const newH = photo.height * ratio;
+                        const offsetX = frameX + (frameW - newW) / 2;
+                        const offsetY = frameY + (frameH - newH) / 2;
+
+                        ctx.drawImage(photo, offsetX, offsetY, newW, newH);
+
+                        const quotes = [
+                            "best of luck",
+                            "dungeoun dragon",
+                            "love portion",
+                            "new valentine"
+                        ];
+                        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+                        ctx.font = "20px 'Myriad Pro', Arial, sans-serif";
+                        ctx.fillStyle = "#ffff";
+                        const textWidth = ctx.measureText(randomQuote).width;
+                        const quoteX = (canvas.width - textWidth) / 2;
+                        const quoteY = 552;
+                        ctx.fillText(randomQuote, quoteX, quoteY);
+
+                        ctx.font = "24px 'Myriad Pro', Arial, sans-serif";
+                        ctx.fillStyle = "#ffff";
+                        ctx.fillText(name, 184, 592.8);
+                    };
+                    photo.src = event.target.result;
+                };
+                reader.readAsDataURL(photoFile);
+            };
+
+            /**
+             * Downloads the generated ID card as a PNG image.
+             * This function is globally accessible for the button's onclick.
+             */
+            window.downloadCard = function() {
+                if (!canvas) {
+                    console.error("Canvas element not found. Cannot download card.");
+                    return;
+                }
+                const link = document.createElement('a');
+                link.download = 'crimsonwood_id_card.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            };
+
+            // Start the teaser animation as soon as the window loads
+            animateTeaser();
+        };
+    </script>
+</body>
+</html>
