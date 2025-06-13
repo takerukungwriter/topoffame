@@ -146,6 +146,7 @@
         #man2-img.man2-phase2-start {
             left: 0%; /* Flush left of the container - Desktop */
             right: auto; /* Ensure no right property conflict */
+            transform: scale(0.86); 
             z-index: 8; /* Behind man1 */
         }
 
@@ -183,7 +184,7 @@
             #man2-img.man2-phase2-start,
             #man2-img.man2-phase3-final {
                 transform: scale(1.8); /* 100% on mobile */
-                left: 1; /* Man2 always flush left on mobile */
+                left: -1; /* Man2 always flush left on mobile */
                 right: auto; /* Ensure no right conflict */
             }
         }
