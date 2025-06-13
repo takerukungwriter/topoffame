@@ -77,7 +77,7 @@
         }
 
         /* Mobile specific style for Q images (higher up) */
-        @media (max-width: 768px) {
+        @media (max-width: 768px) { /* Adjusted breakpoint for mobile phones */
             #q01-img.q-image-left,
             #q02-img.q-image-right {
                 top: 30%; /* Set to 30% for consistency with top2.png context */
@@ -109,7 +109,7 @@
         }
 
         /* Mobile specific style for logo */
-        @media (max-width: 768px) { /* Adjust breakpoint as needed, Tailwind's 'md' is 768px */
+        @media (max-width: 768px) { /* Adjusted breakpoint for mobile phones */
             .teaser-logo {
                 max-width: 200px; /* 50% reduction for mobile (400px * 0.5 = 200px) */
             }
@@ -121,7 +121,7 @@
             display: block;
             position: absolute;
             bottom: 0; /* Always stick to the bottom */
-            width: 80%;
+            width: 80%; /* Default width for desktop */
             max-width: 1000px; /* Max width for man images */
             height: auto;
             opacity: 0;
@@ -146,7 +146,7 @@
         #man2-img.man2-phase2-start {
             left: 0%; /* Flush left of the container - Desktop */
             right: auto; /* Ensure no right property conflict */
-            transform: scale(0.86); 
+            transform: scale(0.86); /* Desktop scale */
             z-index: 8; /* Behind man1 */
         }
 
@@ -171,21 +171,25 @@
             z-index: 8;
         }
 
-        /* Mobile specific styles for Man1.png and Man2.png */
-        @media (max-width: 800px) {
+        /* Mobile specific styles for Man1.png and Man2.png (max-width: 768px to affect phones only, not iPads) */
+        @media (max-width: 768px) { /* Adjusted breakpoint for mobile phones */
+            .teaser-man-image { /* Apply width: 100% to the base man image class on mobile */
+                width: 100%; /* Ensure it's not cut off by inheriting 80% */
+                max-width: none; /* Remove max-width constraint for mobile */
+            }
             #man1-img.man1-phase1-start,
             #man1-img.man1-phase2-move,
             #man1-img.man1-phase3-reset {
-                transform: scale(1.8); /* 100% on mobile */
+                transform: scale(1.8); /* Keep previous scale for Man1 */
                 right: 0; /* Man1 always flush right on mobile */
                 left: auto; /* Ensure no left conflict */
             }
 
             #man2-img.man2-phase2-start,
             #man2-img.man2-phase3-final {
-                transform: scale(1.8); /* 100% on mobile */
-                left: -1; /* Man2 always flush left on mobile */
-                right: auto; /* Ensure no right conflict */
+                transform: translateX(-50%) scale(1.98); /* Center and scale, 10% larger than 1.8 */
+                left: 50%; /* Center horizontally */
+                right: auto; /* Ensure no conflict */
             }
         }
 
