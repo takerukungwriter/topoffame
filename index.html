@@ -550,6 +550,12 @@
                         const numberY = nameY = 700; // Name Y + Name font size (24px) + 30px margin
                         ctx.fillText('12', numberX, numberY);
 
+                        // Render random 6-digit number on the same line as "12" at x=300
+                        const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
+                        const randomNumX = 300; // Specific X position
+                        const randomNumY = numberY; // Same Y position as "12"
+                        ctx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
+
                         // Quote rendering (moved below name and aligned left with name, with 60px spacing)
                         const quotes = [
                             "best of luck",
