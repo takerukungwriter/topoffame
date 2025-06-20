@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top of Fame & Crimsonwood Registrar’s Bureau</title>
-    <!-- Link to Tailwind CSS CDN for basic styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter for Teaser, Sarabun for Main Site -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* Common styles for the entire page */
@@ -269,10 +267,11 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 534px;
-            height: 800px;
-            max-width: 95%;
-            height: auto;
+            /* **ปรับขนาดแสดงผล Canvas บนหน้าจอให้เท่ากับขนาดจริงของ idcard.jpg** */
+            width: 267px; /* กว้าง */
+            height: 400px; /* สูง */
+            max-width: 95%; /* ยังคงรักษา responsive */
+            height: auto; /* ทำให้สัดส่วนคงที่เมื่อ max-width ทำงาน */
             border-radius: 10px;
         }
 
@@ -310,29 +309,22 @@
     </style>
 </head>
 <body>
-    <!-- Teaser Section - This will be displayed first -->
     <div id="teaser-wrapper">
         <div id="author-credit" class="author-credit">นิยายวายแฟนตาซี ©takerukungwriter</div>
         <div class="teaser-container">
-            <!-- Teaser images -->
             <img id="q01-img" class="teaser-image" src="Q01.png" onerror="this.onerror=null;this.src='https://placehold.co/600x150/FF0000/FFFFFF?text=Q01+Image';" alt="">
             <img id="q02-img" class="teaser-image" src="Q02.png" onerror="this.onerror=null;this.src='https://placehold.co/600x150/FF0000/FFFFFF?text=Q02+Image';" alt="">
 
-            <!-- Main Teaser logo image -->
             <img id="logo-img" class="teaser-logo" src="top2.png" onerror="this.onerror=null;this.src='https://placehold.co/400x200/CCCCCC/000000?text=Top+of+Fame+Logo';" alt="">
 
-            <!-- man1.png and man2.png -->
             <img id="man1-img" class="teaser-man-image" src="Man1.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/666666/FFFFFF?text=Man1+Image';" alt="">
             <img id="man2-img" class="teaser-man-image" src="Man2.png" onerror="this.onerror=null;this.src='https://placehold.co/1000x300/444444/FFFFFF?text=Man2+Image';" alt="">
         </div>
     </div>
 
-    <!-- Main Site Section - This will be hidden initially -->
     <div id="main-site-wrapper">
-        <!-- Logo image with fallback -->
         <img src="logo.png" onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=Logo';" alt="" style="display:block; margin: 20px auto 0; width:100px; border-radius: 10px;">
         
-        <!-- Headline image replacing text H1 and H2 -->
         <img src="headline.png" class="main-headline-logo" onerror="this.onerror=null;this.src='https://placehold.co/600x100/FF0000/FFFFFF?text=Crimsonwood+Headline';" alt="">
 
         <br><span class="description-text">อัพโหลดรูปภาพเพื่อลงทะเบียน</span>
@@ -345,9 +337,8 @@
         <br>
         <br>
 
-        <canvas id="idCanvas" width="534" height="800"></canvas>
+        <canvas id="idCanvas" width="267" height="400"></canvas>
 
-        <!-- New: Footer image below the canvas -->
         <img src="foot.png" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Footer';" alt="">
     </div>
 
@@ -491,6 +482,7 @@
                     ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
                 };
 
+                // If image is already loaded (e.g., from browser cache), draw it immediately
                 if (template.complete) {
                     ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
                 }
@@ -507,7 +499,7 @@
                 const photoFile = photoInput.files[0];
 
                 if (!photoFile) {
-                    console.warn("No photo selected. Please upload an image to generate the card.");
+                    alert("กรุณาอัปโหลดรูปภาพเพื่อสร้างบัตรนักเรียน!");
                     return;
                 }
 
@@ -517,14 +509,23 @@
                     photo.onload = function () {
                         if (!ctx) return;
 
+                        // Clear the canvas and redraw the template
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
-                        // Define parameters for student photo frame - ADJUSTED FOR NEW 534x800 TEMPLATE
-                        const frameW = 237.152; /* 296.44 * 0.8 */
-                        const frameH = 355.2; /* 444 * 0.8 */
-                        const centerX = 266.8; /* 333.5 * 0.8 */
-                        const centerY = 355.2; /* 444 * 0.8 */
+                        // **ปรับค่าพารามิเตอร์สำหรับตำแหน่งและขนาดของรูปนักเรียน**
+                        // คำนวณจากสัดส่วน 534x800 -> 267x400 (หารด้วย 2)
+                        const scaleFactor = canvas.width / 534; // ควรจะเป็น 267/534 = 0.5
+
+                        const originalFrameW = 237.152;
+                        const originalFrameH = 355.2;
+                        const originalCenterX = 266.8;
+                        const originalCenterY = 355.2;
+
+                        const frameW = originalFrameW * scaleFactor; 
+                        const frameH = originalFrameH * scaleFactor; 
+                        const centerX = originalCenterX * scaleFactor; 
+                        const centerY = originalCenterY * scaleFactor; 
                         const frameX = centerX - frameW / 2;
                         const frameY = centerY - frameH / 2;
 
@@ -536,28 +537,29 @@
 
                         ctx.drawImage(photo, offsetX, offsetY, newW, newH);
 
-                        // Name rendering
-                        ctx.font = "24px 'Myriad Pro', Arial, sans-serif";
+                        // **ปรับขนาด Font และตำแหน่งข้อความทั้งหมด**
+                        // ชื่อนักเรียน
+                        ctx.font = `${24 * scaleFactor}px 'Myriad Pro', Arial, sans-serif`; // 24 * 0.5 = 12px
                         ctx.fillStyle = "#ffff";
-                        const nameX = 184; // Horizontal position for the name
-                        const nameY = 592.8; // Vertical position for the name
+                        const nameX = 184 * scaleFactor; // 184 * 0.5 = 92
+                        const nameY = 592.8 * scaleFactor; // 592.8 * 0.5 = 296.4
                         ctx.fillText(name, nameX, nameY);
 
-                        // Render "12" below the name with 30px spacing
-                        ctx.font = "20px 'Myriad Pro', Arial, sans-serif"; // Same font size as quotes
-                        ctx.fillStyle = "#ffff"; // White color
-                        const numberX = nameX; // Align horizontally with the name
-                        const numberY = nameY + 24 + 22; // Name Y + Name font size (24px) + 30px margin
+                        // "12" ใต้ชื่อ
+                        ctx.font = `${20 * scaleFactor}px 'Myriad Pro', Arial, sans-serif`; // 20 * 0.5 = 10px
+                        ctx.fillStyle = "#ffff";
+                        const numberX = nameX; // ยังคงจัดแนวนอนเดียวกับชื่อ
+                        const numberY = nameY + (24 * scaleFactor) + (22 * scaleFactor); // Name Y + Name font size + margin
                         ctx.fillText('12', numberX, numberY);
 
-                        // Render random 6-digit number on the same line as "12" at x=300
+                        // เลข 6 หลักสุ่ม
                         const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
-                        const randomNumX = 330; // Specific X position
-                        const randomNumY = numberY; // Same Y position as "12"
+                        const randomNumX = 330 * scaleFactor; // 330 * 0.5 = 165
+                        const randomNumY = numberY; // Y เดียวกับ "12"
                         ctx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
 
 
-                        // Quote rendering (moved below name and aligned left with name, with 60px spacing)
+                        // คำพูดแรนดอม
                         const quotes = [
                             "แชมป์ลีลาศ",
                             "หัวหน้าห้องคิงส์",
@@ -578,10 +580,10 @@
                         ];
                         const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-                        ctx.font = "20px 'Myriad Pro', Arial, sans-serif";
+                        ctx.font = `${20 * scaleFactor}px 'Myriad Pro', Arial, sans-serif`; // 20 * 0.5 = 10px
                         ctx.fillStyle = "#ffff";
-                        const quoteX = nameX; // Align horizontally with the name
-                        const quoteY = nameY + 24 + 60; // Name Y + Name font size (24px) + 60px margin
+                        const quoteX = nameX; // จัดแนวนอนเดียวกับชื่อ
+                        const quoteY = nameY + (24 * scaleFactor) + (60 * scaleFactor); // Name Y + Name font size + margin
                         ctx.fillText(randomQuote, quoteX, quoteY);
                     };
                     photo.src = event.target.result;
@@ -600,7 +602,9 @@
                 }
                 const link = document.createElement('a');
                 link.download = 'crimsonwood_id_card.png';
-                link.href = canvas.toDataURL();
+                // เมื่อกำหนด width และ height ของ canvas ใน HTML โดยตรง
+                // toDataURL() จะใช้ขนาดนั้นในการสร้างรูปภาพ ทำให้ได้ขนาดจริงตามที่ต้องการ
+                link.href = canvas.toDataURL('image/png'); // ระบุ format ชัดเจน
                 link.click();
             };
 
