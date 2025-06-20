@@ -267,9 +267,9 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            /* **ปรับขนาดแสดงผล Canvas บนหน้าจอให้เท่ากับขนาดจริงของ idcard.jpg** */
-            width: 267px; /* กว้าง */
-            height: 400px; /* สูง */
+            /* **ปรับขนาดแสดงผล Canvas บนหน้าจอให้เท่ากับขนาดจริงที่ต้องการ** */
+            width: 401px; /* กว้าง */
+            height: 600px; /* สูง */
             max-width: 95%; /* ยังคงรักษา responsive */
             height: auto; /* ทำให้สัดส่วนคงที่เมื่อ max-width ทำงาน */
             border-radius: 10px;
@@ -337,7 +337,7 @@
         <br>
         <br>
 
-        <canvas id="idCanvas" width="267" height="400"></canvas>
+        <canvas id="idCanvas" width="401" height="600"></canvas>
 
         <img src="foot.png" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Footer';" alt="">
     </div>
@@ -513,14 +513,29 @@
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
 
-                        // **ปรับค่าพารามิเตอร์สำหรับตำแหน่งและขนาดของรูปนักเรียน**
-                        // คำนวณจากสัดส่วน 534x800 -> 267x400 (หารด้วย 2)
-                        const scaleFactor = canvas.width / 534; // ควรจะเป็น 267/534 = 0.5
+                        // **คำนวณ Scale Factor ใหม่จากขนาดเดิม (534x800) ไปยังขนาดใหม่ (401x600)**
+                        // เราใช้ความกว้างเป็นหลักในการคำนวณ scaleFactor
+                        const originalTemplateWidth = 534;
+                        const originalTemplateHeight = 800; // ใช้เพื่ออ้างอิงอัตราส่วน
+                        const newTemplateWidth = 401;
+                        const newTemplateHeight = 600;
 
-                        const originalFrameW = 237.152;
-                        const originalFrameH = 355.2;
-                        const originalCenterX = 266.8;
-                        const originalCenterY = 355.2;
+                        // ตรวจสอบว่าอัตราส่วนยังคงเท่าเดิมหรือไม่ เพื่อหลีกเลี่ยงการบิดเบี้ยวของภาพ
+                        const originalAspectRatio = originalTemplateWidth / originalTemplateHeight;
+                        const newAspectRatio = newTemplateWidth / newTemplateHeight;
+
+                        if (Math.abs(originalAspectRatio - newAspectRatio) > 0.001) { // ค่า tolerance เล็กๆ
+                            console.warn("คำเตือน: อัตราส่วนของขนาดบัตรใหม่ (401x600) ไม่ตรงกับอัตราส่วนเดิม (534x800) เล็กน้อย อาจทำให้ภาพและข้อความบิดเบี้ยวได้!");
+                            // คำนวณ scaleFactor จากความกว้างเป็นหลัก
+                            // ถ้าอยากให้รักษาความสูงเป็นหลัก ให้ใช้ const scaleFactor = newTemplateHeight / originalTemplateHeight;
+                        }
+                        const scaleFactor = newTemplateWidth / originalTemplateWidth; 
+
+                        // **ปรับค่าพารามิเตอร์สำหรับตำแหน่งและขนาดของรูปนักเรียน**
+                        const originalFrameW = 237.152; 
+                        const originalFrameH = 355.2; 
+                        const originalCenterX = 266.8; 
+                        const originalCenterY = 355.2; 
 
                         const frameW = originalFrameW * scaleFactor; 
                         const frameH = originalFrameH * scaleFactor; 
@@ -539,51 +554,45 @@
 
                         // **ปรับขนาด Font และตำแหน่งข้อความทั้งหมด**
                         // ชื่อนักเรียน
-                        ctx.font = `${24 * scaleFactor}px 'Myriad Pro', Arial, sans-serif`; // 24 * 0.5 = 12px
+                        const originalNameFontSize = 24;
+                        ctx.font = `${originalNameFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
                         ctx.fillStyle = "#ffff";
-                        const nameX = 184 * scaleFactor; // 184 * 0.5 = 92
-                        const nameY = 592.8 * scaleFactor; // 592.8 * 0.5 = 296.4
+                        const nameX = 184 * scaleFactor;
+                        const nameY = 592.8 * scaleFactor;
                         ctx.fillText(name, nameX, nameY);
 
                         // "12" ใต้ชื่อ
-                        ctx.font = `${20 * scaleFactor}px 'Myriad Pro', Arial, sans-serif`; // 20 * 0.5 = 10px
+                        const originalNumberFontSize = 20;
+                        const originalNumberMargin = 22; // ระยะห่างจากด้านล่างของชื่อ
+                        ctx.font = `${originalNumberFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
                         ctx.fillStyle = "#ffff";
-                        const numberX = nameX; // ยังคงจัดแนวนอนเดียวกับชื่อ
-                        const numberY = nameY + (24 * scaleFactor) + (22 * scaleFactor); // Name Y + Name font size + margin
+                        const numberX = nameX;
+                        const numberY = nameY + (originalNameFontSize * scaleFactor) + (originalNumberMargin * scaleFactor); 
                         ctx.fillText('12', numberX, numberY);
 
                         // เลข 6 หลักสุ่ม
                         const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
-                        const randomNumX = 330 * scaleFactor; // 330 * 0.5 = 165
-                        const randomNumY = numberY; // Y เดียวกับ "12"
+                        const originalRandomNumX = 330;
+                        const randomNumX = originalRandomNumX * scaleFactor;
+                        const randomNumY = numberY;
                         ctx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
 
 
                         // คำพูดแรนดอม
                         const quotes = [
-                            "แชมป์ลีลาศ",
-                            "หัวหน้าห้องคิงส์",
-                            "หลีดป่วง",
-                            "นักเรียนทุน",
-                            "แชมป์เป่ากบ",
-                            "แชมป์โต้วาที",
-                            "เด็กหลังห้องอันดับ1",
-                            "ถูกพักการเรียน",
-                            "เด็ก gifted",
-                            "เด็กเส้นลูกอาจารย์",
-                            "เด็กวงโย",
-                            "ขาเม้าท์ห้องพักครู",
-                            "เนิร์ดทอปคณิตศาสตร์",
-                            "ภารโรง",
-                            "ลูกรักครูพละ",
-                            "นักกีฬาโควตา"
+                            "แชมป์ลีลาศ", "หัวหน้าห้องคิงส์", "หลีดป่วง", "นักเรียนทุน", "แชมป์เป่ากบ",
+                            "แชมป์โต้วาที", "เด็กหลังห้องอันดับ1", "ถูกพักการเรียน", "เด็ก gifted",
+                            "เด็กเส้นลูกอาจารย์", "เด็กวงโย", "ขาเม้าท์ห้องพักครู", "เนิร์ดทอปคณิตศาสตร์",
+                            "ภารโรง", "ลูกรักครูพละ", "นักกีฬาโควตา"
                         ];
                         const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-                        ctx.font = `${20 * scaleFactor}px 'Myriad Pro', Arial, sans-serif`; // 20 * 0.5 = 10px
+                        const originalQuoteFontSize = 20;
+                        const originalQuoteMargin = 60; // ระยะห่างจากด้านล่างของชื่อ
+                        ctx.font = `${originalQuoteFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
                         ctx.fillStyle = "#ffff";
-                        const quoteX = nameX; // จัดแนวนอนเดียวกับชื่อ
-                        const quoteY = nameY + (24 * scaleFactor) + (60 * scaleFactor); // Name Y + Name font size + margin
+                        const quoteX = nameX;
+                        const quoteY = nameY + (originalNameFontSize * scaleFactor) + (originalQuoteMargin * scaleFactor); 
                         ctx.fillText(randomQuote, quoteX, quoteY);
                     };
                     photo.src = event.target.result;
@@ -602,9 +611,7 @@
                 }
                 const link = document.createElement('a');
                 link.download = 'crimsonwood_id_card.png';
-                // เมื่อกำหนด width และ height ของ canvas ใน HTML โดยตรง
-                // toDataURL() จะใช้ขนาดนั้นในการสร้างรูปภาพ ทำให้ได้ขนาดจริงตามที่ต้องการ
-                link.href = canvas.toDataURL('image/png'); // ระบุ format ชัดเจน
+                link.href = canvas.toDataURL('image/png');
                 link.click();
             };
 
