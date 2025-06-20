@@ -198,7 +198,7 @@
         }
 
         /* Mobile specific styles for Man1.png and Man2.png (max-width: 767px to affect phones only, not iPads) */
-        @media (max-width: 767px) { /* Adjusted breakpoint for mobile phones */
+        @media (max) { /* Adjusted breakpoint for mobile phones */
             .teaser-man-image { /* Apply width: 100% to the base man image class on mobile to ensure full width */
                 width: 100%; /* Use 100% of parent width */
                 max-width: none; /* Remove max-width constraint for mobile */
@@ -267,12 +267,16 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            /* **ปรับขนาดแสดงผล Canvas บนหน้าจอให้เท่ากับขนาดจริงที่ต้องการ** */
-            width: 401px; /* กว้าง */
-            height: 600px; /* สูง */
-            max-width: 95%; /* ยังคงรักษา responsive */
-            height: auto; /* ทำให้สัดส่วนคงที่เมื่อ max-width ทำงาน */
+            /* กำหนดให้ Canvas มีความ Responsive เต็มที่ */
+            /* มันจะปรับขนาดตาม max-width และ parent container */
+            max-width: 95%; 
+            height: auto; 
             border-radius: 10px;
+
+            /* **เพิ่ม CSS image-rendering เพื่อช่วยเรื่องความคมชัดเมื่อเบราว์เซอร์ย่อขนาด** */
+            image-rendering: -webkit-optimize-contrast; 
+            image-rendering: crisp-edges; 
+            image-rendering: pixelated; 
         }
 
         input, button {
@@ -451,19 +455,36 @@
                 });
             }
 
-            // References and functions for the main site's Canvas operations
-            const canvas = document.getElementById('idCanvas');
-            const ctx = canvas ? canvas.getContext('2d') : null;
+            // References for the display Canvas (HTML Canvas element)
+            const displayCanvas = document.getElementById('idCanvas');
+            const displayCtx = displayCanvas ? displayCanvas.getContext('2d') : null;
+
+            // **สร้าง Hidden Canvas สำหรับวาดและดาวน์โหลด**
+            // Canvas นี้จะมี Resolution จริง 401x600 px เพื่อความคมชัดในการดาวน์โหลด
+            const downloadCanvas = document.createElement('canvas');
+            const downloadCtx = downloadCanvas.getContext('2d');
+
+            // กำหนดขนาด Resolution จริงให้กับ downloadCanvas
+            const CARD_WIDTH = 401; // ขนาดกว้างที่ต้องการ
+            const CARD_HEIGHT = 600; // ขนาดสูงที่ต้องการ
+            downloadCanvas.width = CARD_WIDTH;
+            downloadCanvas.height = CARD_HEIGHT;
 
             const template = new Image();
-            template.src = 'idcard.jpg';
+            template.src = 'idcard.jpg'; // ตรวจสอบว่าไฟล์นี้มีขนาด 401x600 px
             template.onerror = () => {
                 console.error("Failed to load idcard.jpg. Please ensure the file exists in the same directory.");
-                if (ctx) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = "#FF0000";
-                    ctx.font = "30px Arial";
-                    ctx.fillText("Template Load Error!", 50, 200);
+                if (displayCtx) {
+                    displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height);
+                    displayCtx.fillStyle = "#FF0000";
+                    displayCtx.font = "30px Arial";
+                    displayCtx.fillText("Template Load Error!", 50, 200);
+                }
+                if (downloadCtx) {
+                    downloadCtx.clearRect(0, 0, downloadCanvas.width, downloadCanvas.height);
+                    downloadCtx.fillStyle = "#FF0000";
+                    downloadCtx.font = "30px Arial";
+                    downloadCtx.fillText("Template Load Error!", 50, 200);
                 }
             };
 
@@ -473,18 +494,25 @@
              * This function is called after the teaser finishes and the main site becomes visible.
              */
             function initializeMainSiteCanvas() {
-                if (!ctx) {
+                if (!displayCtx || !downloadCtx) {
                     console.error('Canvas or its 2D context is not available. Cannot initialize canvas.');
                     return;
                 }
 
                 template.onload = () => {
-                    ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+                    // วาด template ลงบน downloadCanvas ด้วย Resolution จริง
+                    downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
+                    // คัดลอกภาพจาก downloadCanvas ไปแสดงผลบน displayCanvas
+                    displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
+                                                        0, 0, displayCanvas.width, displayCanvas.height);
                 };
 
-                // If image is already loaded (e.g., from browser cache), draw it immediately
                 if (template.complete) {
-                    ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+                    // วาด template ลงบน downloadCanvas ด้วย Resolution จริง
+                    downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
+                    // คัดลอกภาพจาก downloadCanvas ไปแสดงผลบน displayCanvas
+                    displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
+                                                        0, 0, displayCanvas.width, displayCanvas.height);
                 }
             }
 
@@ -507,31 +535,23 @@
                 reader.onload = function (event) {
                     const photo = new Image();
                     photo.onload = function () {
-                        if (!ctx) return;
+                        if (!displayCtx || !downloadCtx) return;
 
-                        // Clear the canvas and redraw the template
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.drawImage(template, 0, 0, canvas.width, canvas.height);
+                        // **สำคัญ: วาดทุกอย่างลงบน downloadCtx (Canvas สำหรับดาวน์โหลด) ก่อน**
+                        // เพื่อให้ได้ภาพที่มี Resolution 401x600 ที่คมชัดเสมอเมื่อดาวน์โหลด
+                        downloadCtx.clearRect(0, 0, downloadCanvas.width, downloadCanvas.height);
+                        downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
 
-                        // **คำนวณ Scale Factor ใหม่จากขนาดเดิม (534x800) ไปยังขนาดใหม่ (401x600)**
-                        // เราใช้ความกว้างเป็นหลักในการคำนวณ scaleFactor
-                        const originalTemplateWidth = 534;
-                        const originalTemplateHeight = 800; // ใช้เพื่ออ้างอิงอัตราส่วน
-                        const newTemplateWidth = 401;
-                        const newTemplateHeight = 600;
+                        // **กำหนด Original Resolution (ที่ใช้คำนวณพิกัดเดิม)**
+                        const ORIGINAL_TEMPLATE_WIDTH = 534;
+                        const ORIGINAL_TEMPLATE_HEIGHT = 800; // ไม่ได้ใช้โดยตรง แต่ดีที่มีไว้
 
-                        // ตรวจสอบว่าอัตราส่วนยังคงเท่าเดิมหรือไม่ เพื่อหลีกเลี่ยงการบิดเบี้ยวของภาพ
-                        const originalAspectRatio = originalTemplateWidth / originalTemplateHeight;
-                        const newAspectRatio = newTemplateWidth / newTemplateHeight;
-
-                        if (Math.abs(originalAspectRatio - newAspectRatio) > 0.001) { // ค่า tolerance เล็กๆ
-                            console.warn("คำเตือน: อัตราส่วนของขนาดบัตรใหม่ (401x600) ไม่ตรงกับอัตราส่วนเดิม (534x800) เล็กน้อย อาจทำให้ภาพและข้อความบิดเบี้ยวได้!");
-                            // คำนวณ scaleFactor จากความกว้างเป็นหลัก
-                            // ถ้าอยากให้รักษาความสูงเป็นหลัก ให้ใช้ const scaleFactor = newTemplateHeight / originalTemplateHeight;
-                        }
-                        const scaleFactor = newTemplateWidth / originalTemplateWidth; 
+                        // คำนวณ Scale Factor ใหม่จาก Original Resolution (534x800)
+                        // ไปยัง Resolution ของบัตรจริงที่เราต้องการ (401x600)
+                        const scaleFactor = CARD_WIDTH / ORIGINAL_TEMPLATE_WIDTH; // 401 / 534 ≈ 0.7509
 
                         // **ปรับค่าพารามิเตอร์สำหรับตำแหน่งและขนาดของรูปนักเรียน**
+                        // ค่าเหล่านี้คือค่าเดิมที่คำนวณจาก Canvas 534x800 แล้วเอามาปรับสัดส่วน
                         const originalFrameW = 237.152; 
                         const originalFrameH = 355.2; 
                         const originalCenterX = 266.8; 
@@ -550,32 +570,32 @@
                         const offsetX = frameX + (frameW - newW) / 2;
                         const offsetY = frameY + (frameH - newH) / 2;
 
-                        ctx.drawImage(photo, offsetX, offsetY, newW, newH);
+                        downloadCtx.drawImage(photo, offsetX, offsetY, newW, newH);
 
                         // **ปรับขนาด Font และตำแหน่งข้อความทั้งหมด**
                         // ชื่อนักเรียน
                         const originalNameFontSize = 24;
-                        ctx.font = `${originalNameFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
-                        ctx.fillStyle = "#ffff";
+                        downloadCtx.font = `${originalNameFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
+                        downloadCtx.fillStyle = "#ffff";
                         const nameX = 184 * scaleFactor;
                         const nameY = 592.8 * scaleFactor;
-                        ctx.fillText(name, nameX, nameY);
+                        downloadCtx.fillText(name, nameX, nameY);
 
                         // "12" ใต้ชื่อ
                         const originalNumberFontSize = 20;
                         const originalNumberMargin = 22; // ระยะห่างจากด้านล่างของชื่อ
-                        ctx.font = `${originalNumberFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
-                        ctx.fillStyle = "#ffff";
+                        downloadCtx.font = `${originalNumberFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
+                        downloadCtx.fillStyle = "#ffff";
                         const numberX = nameX;
                         const numberY = nameY + (originalNameFontSize * scaleFactor) + (originalNumberMargin * scaleFactor); 
-                        ctx.fillText('12', numberX, numberY);
+                        downloadCtx.fillText('12', numberX, numberY);
 
                         // เลข 6 หลักสุ่ม
                         const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
                         const originalRandomNumX = 330;
                         const randomNumX = originalRandomNumX * scaleFactor;
                         const randomNumY = numberY;
-                        ctx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
+                        downloadCtx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
 
 
                         // คำพูดแรนดอม
@@ -589,11 +609,17 @@
 
                         const originalQuoteFontSize = 20;
                         const originalQuoteMargin = 60; // ระยะห่างจากด้านล่างของชื่อ
-                        ctx.font = `${originalQuoteFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
-                        ctx.fillStyle = "#ffff";
+                        downloadCtx.font = `${originalQuoteFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
+                        downloadCtx.fillStyle = "#ffff";
                         const quoteX = nameX;
                         const quoteY = nameY + (originalNameFontSize * scaleFactor) + (originalQuoteMargin * scaleFactor); 
-                        ctx.fillText(randomQuote, quoteX, quoteY);
+                        downloadCtx.fillText(randomQuote, quoteX, quoteY);
+
+                        // **หลังจากวาดเสร็จบน downloadCanvas, ค่อยคัดลอกมาแสดงผลบน displayCanvas**
+                        // การคัดลอกแบบนี้มักจะให้ผลลัพธ์การย่อขนาดที่คมชัดกว่าการให้เบราว์เซอร์ย่อเอง
+                        displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height); // ล้าง display canvas ก่อน
+                        displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
+                                                            0, 0, displayCanvas.width, displayCanvas.height);
                     };
                     photo.src = event.target.result;
                 };
@@ -605,13 +631,14 @@
              * This function is globally accessible for the button's onclick.
              */
             window.downloadCard = function() {
-                if (!canvas) {
-                    console.error("Canvas element not found. Cannot download card.");
+                // ใช้ downloadCanvas ในการสร้างลิงก์ดาวน์โหลด (ซึ่งมี Resolution จริง)
+                if (!downloadCanvas) {
+                    console.error("Download canvas element not found. Cannot download card.");
                     return;
                 }
                 const link = document.createElement('a');
                 link.download = 'crimsonwood_id_card.png';
-                link.href = canvas.toDataURL('image/png');
+                link.href = downloadCanvas.toDataURL('image/png'); // ใช้ downloadCanvas.toDataURL() เพื่อได้ขนาด 401x600 px
                 link.click();
             };
 
