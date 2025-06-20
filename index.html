@@ -198,7 +198,7 @@
         }
 
         /* Mobile specific styles for Man1.png and Man2.png (max-width: 767px to affect phones only, not iPads) */
-        @media (max) { /* Adjusted breakpoint for mobile phones */
+        @media (max-width: 767px) { /* Adjusted breakpoint for mobile phones */
             .teaser-man-image { /* Apply width: 100% to the base man image class on mobile to ensure full width */
                 width: 100%; /* Use 100% of parent width */
                 max-width: none; /* Remove max-width constraint for mobile */
@@ -254,9 +254,9 @@
         /* New style for the main site footer image */
         .main-footer-image {
             display: block;
-            margin: 20px auto 40px;
+            margin: 20px auto 10px; /* ลด margin-bottom ลงเล็กน้อย */
             width: 100%;
-            max-width: 400px;
+            max-width: 400px; /* สามารถปรับตามความเหมาะสมของรูป */
             height: auto;
             border-radius: 10px;
         }
@@ -310,6 +310,25 @@
             max-width: 300px;
         }
 
+        /* เพิ่ม style สำหรับข้อความเตือนดาวน์โหลด */
+        .download-hint {
+            font-size: 0.8rem; /* ขนาดเล็ก */
+            color: #ccc; /* สีเทาอ่อน */
+            margin-top: -5px; /* ดึงขึ้นไปใกล้ปุ่ม */
+            display: block; /* ให้ขึ้นบรรทัดใหม่ */
+            text-align: center;
+        }
+
+        /* Style สำหรับข้อความสีแดงตัวหนา */
+        .red-bold-text {
+            color: red;
+            font-weight: bold;
+            margin-top: 20px; /* เว้นระยะจากรูปภาพด้านบน */
+            margin-bottom: 40px; /* เว้นระยะจากด้านล่าง */
+            display: block; /* ให้ขึ้นบรรทัดใหม่และจัดกลาง */
+            font-size: 1.2em; /* เพิ่มขนาดตัวอักษรเล็กน้อย */
+        }
+
     </style>
 </head>
 <body>
@@ -337,13 +356,19 @@
 
         <button onclick="generateCard()">ทำบัตร</button>
         <button onclick="downloadCard()">Download</button><br>
+        <span class="download-hint">กดดาวน์โหลดจะได้ภาพที่คมชัดกว่า</span>
 
         <br>
         <br>
 
         <canvas id="idCanvas" width="401" height="600"></canvas>
 
-        <img src="foot.png" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Footer';" alt="">
+        <img src="warning1.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
+        <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Line+Image';" alt="Line">
+        <img src="LOGOtop_small.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Logo+Small';" alt="Top Logo Small">
+        <img src="topname.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top Name';" alt="Top Name">
+        
+        <span class="red-bold-text">นิยายวายจิตวิทยาดาร์กแฟนตาซี</span>
     </div>
 
     <script>
@@ -544,7 +569,7 @@
 
                         // **กำหนด Original Resolution (ที่ใช้คำนวณพิกัดเดิม)**
                         const ORIGINAL_TEMPLATE_WIDTH = 534;
-                        const ORIGINAL_TEMPLATE_HEIGHT = 800; // ไม่ได้ใช้โดยตรง แต่ดีที่มีไว้
+                        const ORIGINAL_TEMPLATE_HEIGHT = 800; 
 
                         // คำนวณ Scale Factor ใหม่จาก Original Resolution (534x800)
                         // ไปยัง Resolution ของบัตรจริงที่เราต้องการ (401x600)
@@ -615,8 +640,7 @@
                         const quoteY = nameY + (originalNameFontSize * scaleFactor) + (originalQuoteMargin * scaleFactor); 
                         downloadCtx.fillText(randomQuote, quoteX, quoteY);
 
-                        // **หลังจากวาดเสร็จบน downloadCanvas, ค่อยคัดลอกมาแสดงผลบน displayCanvas**
-                        // การคัดลอกแบบนี้มักจะให้ผลลัพธ์การย่อขนาดที่คมชัดกว่าการให้เบราว์เซอร์ย่อเอง
+                        // **หลังจากวาดเสร็จบน downloadCanvas, คัดลอกไปแสดงผลบน displayCanvas**
                         displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height); // ล้าง display canvas ก่อน
                         displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
                                                             0, 0, displayCanvas.width, displayCanvas.height);
