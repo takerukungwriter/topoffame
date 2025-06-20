@@ -171,7 +171,7 @@
         /* Man2.png in Phase 2: Left side, 80% scale (already default scale) */
         #man2-img.man2-phase2-start {
             left: 0%; /* Flush left of the container - Desktop */
-            right: auto; /* Ensure no right property conflict */
+            right: auto; /* Ensure no right conflict */
             transform: scale(0.80); /* Desktop scale */
             z-index: 8; /* Behind man1 */
         }
@@ -261,7 +261,7 @@
             margin: 10px auto; /* Centers the image horizontally */
         }
 
-        /* New style for main-footer-image (for line.png and LOGOtop_small.png) */
+        /* New style for main-footer-image (for line.png) */
         .main-footer-image {
             display: block;
             margin: 20px auto 10px;
@@ -355,11 +355,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
         }
 
-        /* Small adjustment for LOGOtop_small.png if it needs specific size control */
-        img[src="LOGOtop_small.png"] {
-            max-width: 250px; /* Example: make LOGOtop_small a bit smaller if it's too large */
-        }
-
         /* Style for the link buttons container to center them */
         .link-buttons-container {
             display: flex; /* Use flexbox for horizontal alignment */
@@ -418,18 +413,17 @@
 
         <canvas id="idCanvas" width="401" height="600"></canvas>
 
+        <br>
+        <br>
         <img src="warning1.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
         <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Line+Image';" alt="Line">
-        <img src="LOGOtop_small.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Logo+Small';" alt="Top Logo Small">
         <img src="topname.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Name';" alt="Top Name">
 
         <span class="red-bold-text">โปรดใช้วิจารณญาณในการอ่าน ไม่เหมาะกับบุคคลอ่อนไหวหรือซึมเศร้า <br>
         เหมาะสำหรับผู้อ่านที่มีอายุ 18 ปีขึ้นไปเท่านั้น</span>
 
         <div class="white-text-box">
-            <center>เรื่องย่อ</center><br><br>
-
-            ในรั้วอิฐสีแดงฉานของโรงเรียนชายล้วน “คริมสันวู้ด”
+            <center>เรื่องย่อ</center><br> ในรั้วอิฐสีแดงฉานของโรงเรียนชายล้วน “คริมสันวู้ด”
 
             ดีน คริปสัน นักเรียนใหม่ได้เข้ามาท้าทายระบบอำนาจ
             และสร้างความสั่นไหวให้กับดวงตาสีทองของมาร์ค เอเวอร์ตัน
