@@ -79,7 +79,7 @@
             height: auto;
             opacity: 0;
             /* Transition for opacity only, position changes handled by specific classes */
-            transition: opacity 1s ease-out; 
+            transition: opacity 1s ease-out;
             border-radius: 10px;
             z-index: 10; /* Ensure it's above man images initially */
         }
@@ -119,12 +119,12 @@
             max-width: 400px; /* Max width for logo - Desktop */
             height: auto;
             opacity: 0;
-            transition: opacity 1.5s ease-out, top 1s ease-in-out, transform 1s ease-in-out; 
+            transition: opacity 1.5s ease-out, top 1s ease-in-out, transform 1s ease-in-out;
             border-radius: 10px;
             z-index: 10; /* Ensure it's above man images initially */
         }
         .teaser-logo.show { opacity: 1; }
-        
+
         /* New final position for the logo (top2.png) in Phase 3 */
         .teaser-logo.logo-phase3-final {
             top: 30%; /* Default desktop vertical position (matching new Q position) */
@@ -154,7 +154,7 @@
             /* Default scale to 80% from original, applies immediately on show */
             transform: scale(0.8); /* Desktop default scale */
             /* Crucial: Scales from the bottom edge for initial scaling and ensures bottom alignment */
-            transform-origin: 50% 100%; 
+            transform-origin: 50% 100%;
             /* Added all relevant transform properties for smooth transition */
             transition: opacity 1s ease-out, transform 1s ease-in-out, left 1s ease-in-out, right 1s ease-in-out, top 1s ease-in-out;
             z-index: 8; /* Default z-index, man1 will be higher */
@@ -278,14 +278,14 @@
             margin-left: auto;
             margin-right: auto;
             /* Allow canvas to be fully responsive */
-            max-width: 95%; 
-            height: auto; 
+            max-width: 95%;
+            height: auto;
             border-radius: 10px;
 
             /* **Add CSS image-rendering to help with sharpness when browser scales** */
-            image-rendering: -webkit-optimize-contrast; 
-            image-rendering: crisp-edges; 
-            image-rendering: pixelated; 
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            image-rendering: pixelated;
         }
 
         input, button {
@@ -374,7 +374,7 @@
         .link-button-image {
             display: block;
             width: 100%;
-            max-width: 200px; /* Max width for button image (adjust as needed) */
+            max-width: 260px; /* Adjusted Max width for read.png and meb.png to be 30% larger */
             height: auto;
             border-radius: 8px;
             transition: transform 0.2s ease-in-out; /* Smooth hover effect */
@@ -402,7 +402,7 @@
 
     <div id="main-site-wrapper">
         <img src="logo.png" onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=Logo';" alt="" style="display:block; margin: 20px auto 0; width:100px; border-radius: 10px;">
-        
+
         <img src="headline.png" class="main-headline-logo" onerror="this.onerror=null;this.src='https://placehold.co/600x100/FF0000/FFFFFF?text=Crimsonwood+Headline';" alt="">
 
         <br><span class="description-text">อัพโหลดรูปภาพเพื่อลงทะเบียน</span>
@@ -410,7 +410,7 @@
         <input type="text" id="nameInput" placeholder="ใส่ชื่อนักเรียน"><br><br><br>
 
         <button onclick="generateCard()">ทำบัตร</button>
-        <button onclick="downloadCard()">Download</button><br><br>
+        <button onclick="downloadCard()">Download</button><br>
         <span class="download-hint">กดดาวน์โหลดจะได้ภาพที่คมชัดกว่า</span>
 
         <br>
@@ -420,8 +420,9 @@
 
         <img src="warning1.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
         <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Line+Image';" alt="Line">
+        <img src="LOGOtop_small.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Logo+Small';" alt="Top Logo Small">
         <img src="topname.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Name';" alt="Top Name">
-        
+
         <span class="red-bold-text">โปรดใช้วิจารณญาณในการอ่าน ไม่เหมาะกับบุคคลอ่อนไหวหรือซึมเศร้า <br>
         เหมาะสำหรับผู้อ่านที่มีอายุ 18 ปีขึ้นไปเท่านั้น</span>
 
@@ -489,28 +490,28 @@
 
                 // Phase 1: Show Q01.png (mid-left) and Man1.png (right, scaled) simultaneously
                 q01Img.style.display = 'block'; // Make it display to apply opacity transition
-                q01Img.classList.add('show', 'q-image-left'); 
+                q01Img.classList.add('show', 'q-image-left');
                 man1Img.classList.add('show', 'man1-phase1-start');
                 await new Promise(resolve => setTimeout(resolve, 2000)); // Display for 2 seconds
-                
+
                 // Hide Q01.png after its display time
                 q01Img.classList.remove('show'); // Start opacity fade-out
                 // Wait for a very short moment to allow fade-out to start visually, then hide completely
-                await new Promise(resolve => setTimeout(() => { 
+                await new Promise(resolve => setTimeout(() => {
                     q01Img.style.display = 'none'; // Completely remove from layout
                     resolve();
                 }, 100)); // Short delay to allow visual fade start, then disappear
 
                 // Phase 2: Show Q02.png (mid-right), Man2.png appears (left, scaled), Man1.png moves left
                 q02Img.style.display = 'block'; // Make it display to apply opacity transition
-                q02Img.classList.add('show', 'q-image-right'); 
-                man2Img.classList.add('show', 'man2-phase2-start'); 
+                q02Img.classList.add('show', 'q-image-right');
+                man2Img.classList.add('show', 'man2-phase2-start');
                 man1Img.classList.remove('man1-phase1-start'); // Remove previous position class for man1
                 man1Img.classList.add('man1-phase2-move'); // Apply new position class for man1
                 await new Promise(resolve => setTimeout(resolve, 2500)); // Display for 2.5 seconds
-                
+
                 // Hide Q02.png after its display time
-                q02Img.classList.remove('show'); 
+                q02Img.classList.remove('show');
                 // Wait for a very short moment to allow fade-out to start visually, then hide completely
                 await new Promise(resolve => setTimeout(() => {
                     q02Img.style.display = 'none'; // Completely remove from layout
@@ -526,14 +527,14 @@
                 // Man2 increases size and moves right
                 man2Img.classList.remove('man2-phase2-start'); // Remove phase 2 start position class
                 man2Img.classList.add('man2-phase3-final'); // Apply new phase 3 state for man2
-                
+
                 await new Promise(resolve => setTimeout(resolve, 2000)); // Display for 1 seconds
 
                 // After the entire teaser animation finishes, hide the teaser and show the main site
 
                 teaserWrapper.style.opacity = '0'; // Start fading out teaser wrapper
                 authorCredit.style.opacity = '0'; // Start fading out author credit
-        
+
                 teaserWrapper.style.display = 'none'; // Hide the teaser wrapper completely
                 authorCredit.style.display = 'none'; // Hide author credit completely
                 mainSiteWrapper.style.display = 'block'; // Show the main site wrapper
@@ -608,7 +609,7 @@
                     // Draw the template onto the downloadCanvas with its true resolution
                     downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
                     // Copy the image from downloadCanvas to displayCanvas for rendering
-                    displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
+                    displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height,
                                                         0, 0, displayCanvas.width, displayCanvas.height);
                 };
 
@@ -616,7 +617,7 @@
                     // Draw the template onto the downloadCanvas with its true resolution
                     downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
                     // Copy the image from downloadCanvas to displayCanvas for rendering
-                    displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
+                    displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height,
                                                         0, 0, displayCanvas.width, displayCanvas.height);
                 }
             }
@@ -649,7 +650,7 @@
 
                         // **Define Original Resolution (used for initial coordinate calculation)**
                         const ORIGINAL_TEMPLATE_WIDTH = 534;
-                        const ORIGINAL_TEMPLATE_HEIGHT = 800; 
+                        const ORIGINAL_TEMPLATE_HEIGHT = 800;
 
                         // Calculate the new Scale Factor from the Original Resolution (534x800)
                         // to the desired true card resolution (401x600)
@@ -657,15 +658,15 @@
 
                         // **Adjust parameters for student photo frame position and size**
                         // These are the original values calculated for a 534x800 Canvas, scaled down.
-                        const originalFrameW = 237.152; 
-                        const originalFrameH = 355.2; 
-                        const originalCenterX = 266.8; 
-                        const originalCenterY = 355.2; 
+                        const originalFrameW = 237.152;
+                        const originalFrameH = 355.2;
+                        const originalCenterX = 266.8;
+                        const originalCenterY = 355.2;
 
-                        const frameW = originalFrameW * scaleFactor; 
-                        const frameH = originalFrameH * scaleFactor; 
-                        const centerX = originalCenterX * scaleFactor; 
-                        const centerY = originalCenterY * scaleFactor; 
+                        const frameW = originalFrameW * scaleFactor;
+                        const frameH = originalFrameH * scaleFactor;
+                        const centerX = originalCenterX * scaleFactor;
+                        const centerY = originalCenterY * scaleFactor;
                         const frameX = centerX - frameW / 2;
                         const frameY = centerY - frameH / 2;
 
@@ -692,7 +693,7 @@
                         downloadCtx.font = `${originalNumberFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
                         downloadCtx.fillStyle = "#ffff";
                         const numberX = nameX;
-                        const numberY = nameY + (originalNameFontSize * scaleFactor) + (originalNumberMargin * scaleFactor); 
+                        const numberY = nameY + (originalNameFontSize * scaleFactor) + (originalNumberMargin * scaleFactor);
                         downloadCtx.fillText('12', numberX, numberY);
 
                         // Random 6-digit number
@@ -717,12 +718,12 @@
                         downloadCtx.font = `${originalQuoteFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
                         downloadCtx.fillStyle = "#ffff";
                         const quoteX = nameX;
-                        const quoteY = nameY + (originalNameFontSize * scaleFactor) + (originalQuoteMargin * scaleFactor); 
+                        const quoteY = nameY + (originalNameFontSize * scaleFactor) + (originalQuoteMargin * scaleFactor);
                         downloadCtx.fillText(randomQuote, quoteX, quoteY);
 
                         // **After drawing on downloadCanvas, copy it to displayCanvas for rendering**
                         displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height); // Clear display canvas first
-                        displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
+                        displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height,
                                                             0, 0, displayCanvas.width, displayCanvas.height);
                     };
                     photo.src = event.target.result;
