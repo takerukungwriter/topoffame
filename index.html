@@ -251,15 +251,6 @@
             height: auto;
             border-radius: 10px;
         }
-        /* New style for the main site footer image */
-        .main-footer-image {
-            display: block;
-            margin: 20px auto 10px; /* ลด margin-bottom ลงเล็กน้อย */
-            width: 100%;
-            max-width: 400px; /* สามารถปรับตามความเหมาะสมของรูป */
-            height: auto;
-            border-radius: 10px;
-        }
 
         canvas {
             border: 1px solid #ccc;
@@ -319,14 +310,40 @@
             text-align: center;
         }
 
+       /* Style สำหรับรูปภาพ warning1.png และ topname.png ให้กว้างเท่าหน้าจอ */
+        .responsive-image {
+            display: block;
+            width: 100%; /* ทำให้รูปกว้างเท่ากับ container */
+            height: auto; /* รักษาอัตราส่วนภาพ */
+            max-width: 100%; /* ป้องกันไม่ให้รูปภาพใหญ่เกิน container */
+            margin: 10px auto; /* จัดรูปภาพไว้ตรงกลาง */
+        }
+
+
         /* Style สำหรับข้อความสีแดงตัวหนา */
         .red-bold-text {
             color: red;
             font-weight: bold;
-            margin-top: 20px; /* เว้นระยะจากรูปภาพด้านบน */
-            margin-bottom: 40px; /* เว้นระยะจากด้านล่าง */
-            display: block; /* ให้ขึ้นบรรทัดใหม่และจัดกลาง */
-            font-size: 1.2em; /* เพิ่มขนาดตัวอักษรเล็กน้อย */
+            margin-top: 20px;
+            margin-bottom: 40px;
+            display: block;
+            text-align: center; /* จัดข้อความไว้ตรงกลาง */
+            font-size: 0.9em; /* ปรับขนาดตัวอักษรให้เล็กลง */
+            padding: 0 10px; /* เพิ่ม padding เพื่อให้ข้อความไม่ชิดขอบ */
+        }
+
+        /* Style สำหรับกล่องข้อความสีขาว */
+        .white-text-box {
+            background-color: rgba(255, 255, 255, 0.8); /* สีขาวโปร่งแสง */
+            color: black; /* สีข้อความเป็นสีดำ */
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            max-width: 80%; /* จำกัดความกว้างของกล่องข้อความ */
+            text-align: left; /* จัดข้อความชิดซ้าย */
+            font-size: 0.9em; /* ปรับขนาดตัวอักษรให้เล็กลง */
+            line-height: 1.6; /* เพิ่มระยะห่างระหว่างบรรทัด */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
         }
 
     </style>
@@ -363,26 +380,29 @@
 
         <canvas id="idCanvas" width="401" height="600"></canvas>
 
-        <img src="warning1.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
+        <img src="warning1.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
         <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Line+Image';" alt="Line">
-        <img src="topname.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top Name';" alt="Top Name">
+        <img src="topname.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Name';" alt="Top Name">
         
         <span class="red-bold-text">โปรดใช้วิจารณญาณในการอ่าน ไม่เหมาะกับบุคคลอ่อนไหวหรือซึมเศร้า
-เหมาะสำหรับผู้อ่านที่มีอายุ 18 ปีขึ้นไปเท่านั้น</span>
+        เหมาะสำหรับผู้อ่านที่มีอายุ 18 ปีขึ้นไปเท่านั้น</span>
+
+        <div class="white-text-box">
+            เรื่องย่อ<br><br>
+
+            ในรั้วอิฐสีแดงฉานของโรงเรียนชายล้วน “คริมสันวู้ด”
+
+            ดีน คริปสัน นักเรียนใหม่ได้เข้ามาท้าทายระบบอำนาจ
+            และสร้างความสั่นไหวให้กับดวงตาสีทองของมาร์ค เอเวอร์ตัน
+
+            ประธานนักเรียนผู้อยู่บน
+            Hall of Fame
+            ตำแหน่งที่ร่ำลือว่ามาพร้อมอำนาจอภิสิทธิ์ลึกลับอันดำมืด
+
+            ทำให้การแย่งชิงตำแหน่งกลายเป็นเกมจิตวิทยา
+            ดิ่งลึกที่ต้องงัดทั้ง สมอง หัวใจ และ เรือนร่าง มาใช้เป็นอาวุธ
+        </div>
     </div>
-<span class="white-text">เรื่องย่อ<br><br>
-
-ในรั้วอิฐสีแดงฉานของโรงเรียนชายล้วน “คริมสันวู้ด” <br>
-
-ดีน คริปสัน นักเรียนใหม่ได้เข้ามาท้าทายระบบอำนาจ<br>
-และสร้างความสั่นไหวให้กับดวงตาสีทองของมาร์ค เอเวอร์ตัน<br>
-
-ประธานนักเรียนผู้อยู่บน<br>
-Hall of Fame<br>
-ตำแหน่งที่ร่ำลือว่ามาพร้อมอำนาจอภิสิทธิ์ลึกลับอันดำมืด<br>
-
-ทำให้การแย่งชิงตำแหน่งกลายเป็นเกมจิตวิทยา<br>
-ดิ่งลึกที่ต้องงัดทั้ง สมอง หัวใจ และ เรือนร่าง มาใช้เป็นอาวุธ</span>
     <script>
         // JavaScript for Teaser animation and controlling visibility
         window.onload = function() {
@@ -587,100 +607,4 @@ Hall of Fame<br>
                         // ไปยัง Resolution ของบัตรจริงที่เราต้องการ (401x600)
                         const scaleFactor = CARD_WIDTH / ORIGINAL_TEMPLATE_WIDTH; // 401 / 534 ≈ 0.7509
 
-                        // **ปรับค่าพารามิเตอร์สำหรับตำแหน่งและขนาดของรูปนักเรียน**
-                        // ค่าเหล่านี้คือค่าเดิมที่คำนวณจาก Canvas 534x800 แล้วเอามาปรับสัดส่วน
-                        const originalFrameW = 237.152; 
-                        const originalFrameH = 355.2; 
-                        const originalCenterX = 266.8; 
-                        const originalCenterY = 355.2; 
-
-                        const frameW = originalFrameW * scaleFactor; 
-                        const frameH = originalFrameH * scaleFactor; 
-                        const centerX = originalCenterX * scaleFactor; 
-                        const centerY = originalCenterY * scaleFactor; 
-                        const frameX = centerX - frameW / 2;
-                        const frameY = centerY - frameH / 2;
-
-                        const ratio = Math.min(frameW / photo.width, frameH / photo.height);
-                        const newW = photo.width * ratio;
-                        const newH = photo.height * ratio;
-                        const offsetX = frameX + (frameW - newW) / 2;
-                        const offsetY = frameY + (frameH - newH) / 2;
-
-                        downloadCtx.drawImage(photo, offsetX, offsetY, newW, newH);
-
-                        // **ปรับขนาด Font และตำแหน่งข้อความทั้งหมด**
-                        // ชื่อนักเรียน
-                        const originalNameFontSize = 24;
-                        downloadCtx.font = `${originalNameFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
-                        downloadCtx.fillStyle = "#ffff";
-                        const nameX = 184 * scaleFactor;
-                        const nameY = 592.8 * scaleFactor;
-                        downloadCtx.fillText(name, nameX, nameY);
-
-                        // "12" ใต้ชื่อ
-                        const originalNumberFontSize = 20;
-                        const originalNumberMargin = 22; // ระยะห่างจากด้านล่างของชื่อ
-                        downloadCtx.font = `${originalNumberFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
-                        downloadCtx.fillStyle = "#ffff";
-                        const numberX = nameX;
-                        const numberY = nameY + (originalNameFontSize * scaleFactor) + (originalNumberMargin * scaleFactor); 
-                        downloadCtx.fillText('12', numberX, numberY);
-
-                        // เลข 6 หลักสุ่ม
-                        const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
-                        const originalRandomNumX = 330;
-                        const randomNumX = originalRandomNumX * scaleFactor;
-                        const randomNumY = numberY;
-                        downloadCtx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
-
-
-                        // คำพูดแรนดอม
-                        const quotes = [
-                            "แชมป์ลีลาศ", "หัวหน้าห้องคิงส์", "หลีดป่วง", "นักเรียนทุน", "แชมป์เป่ากบ",
-                            "แชมป์โต้วาที", "เด็กหลังห้องอันดับ1", "ถูกพักการเรียน", "เด็ก gifted",
-                            "เด็กเส้นลูกอาจารย์", "เด็กวงโย", "ขาเม้าท์ห้องพักครู", "เนิร์ดทอปคณิตศาสตร์",
-                            "ภารโรง", "ลูกรักครูพละ", "นักกีฬาโควตา"
-                        ];
-                        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-
-                        const originalQuoteFontSize = 20;
-                        const originalQuoteMargin = 60; // ระยะห่างจากด้านล่างของชื่อ
-                        downloadCtx.font = `${originalQuoteFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
-                        downloadCtx.fillStyle = "#ffff";
-                        const quoteX = nameX;
-                        const quoteY = nameY + (originalNameFontSize * scaleFactor) + (originalQuoteMargin * scaleFactor); 
-                        downloadCtx.fillText(randomQuote, quoteX, quoteY);
-
-                        // **หลังจากวาดเสร็จบน downloadCanvas, คัดลอกไปแสดงผลบน displayCanvas**
-                        displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height); // ล้าง display canvas ก่อน
-                        displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
-                                                            0, 0, displayCanvas.width, displayCanvas.height);
-                    };
-                    photo.src = event.target.result;
-                };
-                reader.readAsDataURL(photoFile);
-            };
-
-            /**
-             * Downloads the generated ID card as a PNG image.
-             * This function is globally accessible for the button's onclick.
-             */
-            window.downloadCard = function() {
-                // ใช้ downloadCanvas ในการสร้างลิงก์ดาวน์โหลด (ซึ่งมี Resolution จริง)
-                if (!downloadCanvas) {
-                    console.error("Download canvas element not found. Cannot download card.");
-                    return;
-                }
-                const link = document.createElement('a');
-                link.download = 'crimsonwood_id_card.png';
-                link.href = downloadCanvas.toDataURL('image/png'); // ใช้ downloadCanvas.toDataURL() เพื่อได้ขนาด 401x600 px
-                link.click();
-            };
-
-            // Start the teaser animation as soon as the window loads
-            animateTeaser();
-        };
-    </script>
-</body>
-</html>
+                        //
