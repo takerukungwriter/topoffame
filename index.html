@@ -252,6 +252,22 @@
             border-radius: 10px;
         }
 
+        /* New style for subhead.png */
+        .subhead-image {
+            display: block;
+            width: 100%; /* Full width on mobile by default */
+            height: auto;
+            max-width: 70%; /* Max width 70% on larger screens (PC) */
+            margin: 10px auto; /* Centers the image horizontally */
+        }
+        /* Mobile specific adjustment for subhead-image to ensure full width on smaller screens */
+        @media (max-width: 767px) {
+            .subhead-image {
+                max-width: 100%; /* Ensure it's full width on mobile */
+            }
+        }
+
+
         /* New style for responsive images like warning1.png and topname.png */
         .responsive-image {
             display: block;
@@ -399,6 +415,8 @@
         <img src="logo.png" onerror="this.onerror=null;this.src='https://placehold.co/200x200/CCCCCC/000000?text=Logo';" alt="" style="display:block; margin: 20px auto 0; width:100px; border-radius: 10px;">
 
         <img src="headline.png" class="main-headline-logo" onerror="this.onerror=null;this.src='https://placehold.co/600x100/FF0000/FFFFFF?text=Crimsonwood+Headline';" alt="">
+
+        <img src="subhead.png" class="subhead-image" onerror="this.onerror=null;this.src='https://placehold.co/600x100/ADD8E6/000000?text=Subhead+Image';" alt="Subhead">
 
         <br><span class="description-text">อัพโหลดรูปภาพเพื่อลงทะเบียน</span>
         <br><input type="file" id="photoInput" accept="image/*"><br><br>
