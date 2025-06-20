@@ -360,6 +360,29 @@
             max-width: 250px; /* Example: make LOGOtop_small a bit smaller if it's too large */
         }
 
+        /* New styles for the link buttons */
+        .link-buttons-container {
+            display: flex;
+            justify-content: center; /* Center the buttons */
+            gap: 20px; /* Space between buttons */
+            margin-top: 40px; /* Margin above the buttons */
+            margin-bottom: 40px; /* Margin below the buttons */
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+        }
+
+        .link-button img {
+            width: 100%;
+            max-width: 180px; /* Max width for each button image */
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .link-button img:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
+        }
+
     </style>
 </head>
 <body>
@@ -394,27 +417,49 @@
 
         <canvas id="idCanvas" width="401" height="600"></canvas>
 
-        <img src="warning1.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
-        <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Line+Image';" alt="Line">
-        <img src="topname.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Name';" alt="Top Name">
+        <div class="link-buttons-container">
+            <a href="https://www.readawrite.com/a/c1549d5a18776cd72c8da87d5abdd0be" target="_blank" class="link-button">
+                <img src="read.png" alt="ReadAWrite Link" onerror="this.onerror=null;this.src='https://placehold.co/180x60/CCCCCC/000000?text=Read+Link';">
+            </a>
+            <a href="https://www.mebmarket.com/ebook-350532-Dreamtective--%E0%B8%99%E0%B8%B4%E0%B8%97%E0%B8%A3%E0%B8%B2%E0%B8%AD%E0%B8%B2%E0%B8%8A%E0%B8%8D%E0%B8%B2" target="_blank" class="link-button">
+                <img src="meb.png" alt="Meb Link" onerror="this.onerror=null;this.src='https://placehold.co/180x60/CCCCCC/000000?text=MEB+Link';">
+            </a>
+        </div>
+
+        <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x10/CCCCCC/000000?text=Line+Image';" alt="Line">
         
-        <span class="red-bold-text">โปรดใช้วิจารณญาณในการอ่าน ไม่เหมาะกับบุคคลอ่อนไหวหรือซึมเศร้า <br>
+        <img src="trigger.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Trigger+Image';" alt="Trigger Warning">
+
+        <span class="red-bold-text">โปรดใช้วิจารณญาณในการอ่าน ไม่เหมาะกับบุคคลอ่อนไหวหรือซึมเศร้า
         เหมาะสำหรับผู้อ่านที่มีอายุ 18 ปีขึ้นไปเท่านั้น</span>
 
         <div class="white-text-box">
-            <center>เรื่องย่อ<br><br></center>
+            เรื่องย่อ<br><br>
 
-            ในรั้วอิฐสีแดงฉานของโรงเรียนชายล้วน “คริมสันวู้ด”
+            ในรั้วอิฐสีแดงฉานของโรงเรียนชายล้วน “คริมสันวู้ด”<br><br>
 
             ดีน คริปสัน นักเรียนใหม่ได้เข้ามาท้าทายระบบอำนาจ
-            และสร้างความสั่นไหวให้กับดวงตาสีทองของมาร์ค เอเวอร์ตัน
+            และสร้างความสั่นไหวให้กับดวงตาสีทองของมาร์ค เอเวอร์ตัน<br><br>
 
             ประธานนักเรียนผู้อยู่บน
             Hall of Fame
-            ตำแหน่งที่ร่ำลือว่ามาพร้อมอำนาจอภิสิทธิ์ลึกลับอันดำมืด
+            ตำแหน่งที่ร่ำลือว่ามาพร้อมอำนาจอภิสิทธิ์ลึกลับอันดำมืด<br><br>
 
             ทำให้การแย่งชิงตำแหน่งกลายเป็นเกมจิตวิทยา
-            ดิ่งลึกที่ต้องงัดทั้ง สมอง หัวใจ และ เรือนร่าง มาใช้เป็นอาวุธ
+            ดิ่งลึกที่ต้องงัดทั้ง สมอง หัวใจ และ เรือนร่าง มาใช้เป็นอาวุธ<br><br>
+
+            <span style="font-weight: bold; color: red;">เนื้อหาที่ควรใช้วิจารณญาณ:</span><br>
+            <ul>
+                <li>นิยายเรื่องนี้เป้าหมายเพื่อวิพากษ์เรื่องอำนาจ และความเปราะบางของมนุษย์ในสถานการณ์จำลอง เป็นเพียงจินตนาการของผู้แต่ง ตัวละคร เหตุการณ์ สถานที่ และแนวคิดต่างๆ ไม่ได้อ้างอิงหรือเกี่ยวข้องกับบุคคลหรือสถานศึกษาใดในชีวิตจริง</li>
+                <li>เนื้อหามีโทนจิตวิทยา ดาร์ค และอาจกระทบจิตใจได้</li>
+                <li>อำนาจและการควบคุมทางจิตวิทยา</li>
+                <li>พฤติกรรมบีบบังคับ การยินยอมในบริบทไม่สมดุล (dubious consent)</li>
+                <li>ฉากเร้าอารมณ์/เพศสัมพันธ์ระหว่างชายชายที่อาจทำให้รู้สึกไม่สบายใจ</li>
+                <li>ความรุนแรง ฉากต่อสู้ การนองเลือด และโศกนาฏกรรม</li>
+                <li>พื้นที่สีเทาของศรัทธา อำนาจ และศีลธรรม</li>
+                <li>ตัวละครที่มีพฤติกรรมหรือความคิดไม่เหมาะสมในชีวิตจริง</li>
+                <li>ไม่มีเจตนา romanticize หรือทำให้ความรุนแรง, การล่วงละเมิด หรือความผิดพลาดของตัวละครให้ดูน่ายอมรับ</li>
+            </ul>
         </div>
     </div>
     <script>
