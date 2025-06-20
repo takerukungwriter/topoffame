@@ -252,19 +252,37 @@
             border-radius: 10px;
         }
 
+        /* New style for responsive images like warning1.png and topname.png */
+        .responsive-image {
+            display: block;
+            width: 100%; /* Makes the image take full width of its parent */
+            height: auto; /* Maintains aspect ratio */
+            max-width: 100%; /* Ensures it doesn't grow beyond its natural size if parent is larger */
+            margin: 10px auto; /* Centers the image horizontally */
+        }
+
+        /* New style for main-footer-image (for line.png and LOGOtop_small.png) */
+        .main-footer-image {
+            display: block;
+            margin: 20px auto 10px;
+            width: 100%;
+            max-width: 400px; /* Can be adjusted based on the image's intended size */
+            height: auto;
+            border-radius: 10px;
+        }
+
         canvas {
             border: 1px solid #ccc;
             margin-top: 10px;
             display: block;
             margin-left: auto;
             margin-right: auto;
-            /* กำหนดให้ Canvas มีความ Responsive เต็มที่ */
-            /* มันจะปรับขนาดตาม max-width และ parent container */
+            /* Allow canvas to be fully responsive */
             max-width: 95%; 
             height: auto; 
             border-radius: 10px;
 
-            /* **เพิ่ม CSS image-rendering เพื่อช่วยเรื่องความคมชัดเมื่อเบราว์เซอร์ย่อขนาด** */
+            /* **Add CSS image-rendering to help with sharpness when browser scales** */
             image-rendering: -webkit-optimize-contrast; 
             image-rendering: crisp-edges; 
             image-rendering: pixelated; 
@@ -301,49 +319,45 @@
             max-width: 300px;
         }
 
-        /* เพิ่ม style สำหรับข้อความเตือนดาวน์โหลด */
+        /* Added style for download hint text */
         .download-hint {
-            font-size: 0.8rem; /* ขนาดเล็ก */
-            color: #ccc; /* สีเทาอ่อน */
-            margin-top: -5px; /* ดึงขึ้นไปใกล้ปุ่ม */
-            display: block; /* ให้ขึ้นบรรทัดใหม่ */
+            font-size: 0.8rem; /* Small size */
+            color: #ccc; /* Light grey color */
+            margin-top: -5px; /* Pull it closer to the button */
+            display: block; /* Ensures it's on its own line */
             text-align: center;
         }
 
-       /* Style สำหรับรูปภาพ warning1.png และ topname.png ให้กว้างเท่าหน้าจอ */
-        .responsive-image {
-            display: block;
-            width: 100%; /* ทำให้รูปกว้างเท่ากับ container */
-            height: auto; /* รักษาอัตราส่วนภาพ */
-            max-width: 100%; /* ป้องกันไม่ให้รูปภาพใหญ่เกิน container */
-            margin: 10px auto; /* จัดรูปภาพไว้ตรงกลาง */
-        }
-
-
-        /* Style สำหรับข้อความสีแดงตัวหนา */
+        /* Style for bold red text */
         .red-bold-text {
             color: red;
             font-weight: bold;
             margin-top: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 20px; /* Adjusted margin for better spacing */
             display: block;
-            text-align: center; /* จัดข้อความไว้ตรงกลาง */
-            font-size: 0.9em; /* ปรับขนาดตัวอักษรให้เล็กลง */
-            padding: 0 10px; /* เพิ่ม padding เพื่อให้ข้อความไม่ชิดขอบ */
+            text-align: center; /* Center the text */
+            font-size: 0.9em; /* Smaller font size */
+            padding: 0 15px; /* Add horizontal padding to prevent touching edges */
         }
 
-        /* Style สำหรับกล่องข้อความสีขาว */
+        /* Style for the white text box */
         .white-text-box {
-            background-color: rgba(255, 255, 255, 0.8); /* สีขาวโปร่งแสง */
-            color: black; /* สีข้อความเป็นสีดำ */
+            background-color: rgba(255, 255, 255, 0.1); /* White with transparency for a sleek look */
+            color: white; /* White text color */
             padding: 20px;
-            margin: 20px auto;
+            margin: 20px auto 40px auto; /* Centered with margin-bottom */
             border-radius: 10px;
-            max-width: 80%; /* จำกัดความกว้างของกล่องข้อความ */
-            text-align: left; /* จัดข้อความชิดซ้าย */
-            font-size: 0.9em; /* ปรับขนาดตัวอักษรให้เล็กลง */
-            line-height: 1.6; /* เพิ่มระยะห่างระหว่างบรรทัด */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+            max-width: 700px; /* Max width for the text box */
+            text-align: justify; /* Justify text for a clean block look */
+            font-size: 0.9em; /* Smaller font size */
+            line-height: 1.6; /* Increased line height for readability */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+        }
+
+        /* Small adjustment for LOGOtop_small.png if it needs specific size control */
+        img[src="LOGOtop_small.png"] {
+            max-width: 250px; /* Example: make LOGOtop_small a bit smaller if it's too large */
         }
 
     </style>
@@ -382,6 +396,7 @@
 
         <img src="warning1.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
         <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Line+Image';" alt="Line">
+        <img src="LOGOtop_small.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Logo+Small';" alt="Top Logo Small">
         <img src="topname.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Name';" alt="Top Name">
         
         <span class="red-bold-text">โปรดใช้วิจารณญาณในการอ่าน ไม่เหมาะกับบุคคลอ่อนไหวหรือซึมเศร้า
@@ -516,19 +531,19 @@
             const displayCanvas = document.getElementById('idCanvas');
             const displayCtx = displayCanvas ? displayCanvas.getContext('2d') : null;
 
-            // **สร้าง Hidden Canvas สำหรับวาดและดาวน์โหลด**
-            // Canvas นี้จะมี Resolution จริง 401x600 px เพื่อความคมชัดในการดาวน์โหลด
+            // **Create Hidden Canvas for drawing and downloading**
+            // This Canvas will have the true resolution (401x600 px) for crisp downloads.
             const downloadCanvas = document.createElement('canvas');
             const downloadCtx = downloadCanvas.getContext('2d');
 
-            // กำหนดขนาด Resolution จริงให้กับ downloadCanvas
-            const CARD_WIDTH = 401; // ขนาดกว้างที่ต้องการ
-            const CARD_HEIGHT = 600; // ขนาดสูงที่ต้องการ
+            // Set the true resolution for the downloadCanvas
+            const CARD_WIDTH = 401; // Desired width
+            const CARD_HEIGHT = 600; // Desired height
             downloadCanvas.width = CARD_WIDTH;
             downloadCanvas.height = CARD_HEIGHT;
 
             const template = new Image();
-            template.src = 'idcard.jpg'; // ตรวจสอบว่าไฟล์นี้มีขนาด 401x600 px
+            template.src = 'idcard.jpg'; // Ensure this file is 401x600 px
             template.onerror = () => {
                 console.error("Failed to load idcard.jpg. Please ensure the file exists in the same directory.");
                 if (displayCtx) {
@@ -557,17 +572,17 @@
                 }
 
                 template.onload = () => {
-                    // วาด template ลงบน downloadCanvas ด้วย Resolution จริง
+                    // Draw the template onto the downloadCanvas with its true resolution
                     downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
-                    // คัดลอกภาพจาก downloadCanvas ไปแสดงผลบน displayCanvas
+                    // Copy the image from downloadCanvas to displayCanvas for rendering
                     displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
                                                         0, 0, displayCanvas.width, displayCanvas.height);
                 };
 
                 if (template.complete) {
-                    // วาด template ลงบน downloadCanvas ด้วย Resolution จริง
+                    // Draw the template onto the downloadCanvas with its true resolution
                     downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
-                    // คัดลอกภาพจาก downloadCanvas ไปแสดงผลบน displayCanvas
+                    // Copy the image from downloadCanvas to displayCanvas for rendering
                     displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
                                                         0, 0, displayCanvas.width, displayCanvas.height);
                 }
@@ -594,17 +609,113 @@
                     photo.onload = function () {
                         if (!displayCtx || !downloadCtx) return;
 
-                        // **สำคัญ: วาดทุกอย่างลงบน downloadCtx (Canvas สำหรับดาวน์โหลด) ก่อน**
-                        // เพื่อให้ได้ภาพที่มี Resolution 401x600 ที่คมชัดเสมอเมื่อดาวน์โหลด
+                        // **Important: Draw everything onto downloadCtx (the download Canvas) first**
+                        // This ensures the 401x600 resolution image is always crisp for download.
                         downloadCtx.clearRect(0, 0, downloadCanvas.width, downloadCanvas.height);
                         downloadCtx.drawImage(template, 0, 0, downloadCanvas.width, downloadCanvas.height);
 
-                        // **กำหนด Original Resolution (ที่ใช้คำนวณพิกัดเดิม)**
+                        // **Define Original Resolution (used for initial coordinate calculation)**
                         const ORIGINAL_TEMPLATE_WIDTH = 534;
                         const ORIGINAL_TEMPLATE_HEIGHT = 800; 
 
-                        // คำนวณ Scale Factor ใหม่จาก Original Resolution (534x800)
-                        // ไปยัง Resolution ของบัตรจริงที่เราต้องการ (401x600)
+                        // Calculate the new Scale Factor from the Original Resolution (534x800)
+                        // to the desired true card resolution (401x600)
                         const scaleFactor = CARD_WIDTH / ORIGINAL_TEMPLATE_WIDTH; // 401 / 534 ≈ 0.7509
 
-                        //
+                        // **Adjust parameters for student photo frame position and size**
+                        // These are the original values calculated for a 534x800 Canvas, scaled down.
+                        const originalFrameW = 237.152; 
+                        const originalFrameH = 355.2; 
+                        const originalCenterX = 266.8; 
+                        const originalCenterY = 355.2; 
+
+                        const frameW = originalFrameW * scaleFactor; 
+                        const frameH = originalFrameH * scaleFactor; 
+                        const centerX = originalCenterX * scaleFactor; 
+                        const centerY = originalCenterY * scaleFactor; 
+                        const frameX = centerX - frameW / 2;
+                        const frameY = centerY - frameH / 2;
+
+                        const ratio = Math.min(frameW / photo.width, frameH / photo.height);
+                        const newW = photo.width * ratio;
+                        const newH = photo.height * ratio;
+                        const offsetX = frameX + (frameW - newW) / 2;
+                        const offsetY = frameY + (frameH - newH) / 2;
+
+                        downloadCtx.drawImage(photo, offsetX, offsetY, newW, newH);
+
+                        // **Adjust Font sizes and text positions**
+                        // Student Name
+                        const originalNameFontSize = 24;
+                        downloadCtx.font = `${originalNameFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
+                        downloadCtx.fillStyle = "#ffff";
+                        const nameX = 184 * scaleFactor;
+                        const nameY = 592.8 * scaleFactor;
+                        downloadCtx.fillText(name, nameX, nameY);
+
+                        // "12" below the name
+                        const originalNumberFontSize = 20;
+                        const originalNumberMargin = 22; // Margin from bottom of name
+                        downloadCtx.font = `${originalNumberFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
+                        downloadCtx.fillStyle = "#ffff";
+                        const numberX = nameX;
+                        const numberY = nameY + (originalNameFontSize * scaleFactor) + (originalNumberMargin * scaleFactor); 
+                        downloadCtx.fillText('12', numberX, numberY);
+
+                        // Random 6-digit number
+                        const randomSixDigitNumber = Math.floor(100000 + Math.random() * 900000);
+                        const originalRandomNumX = 330;
+                        const randomNumX = originalRandomNumX * scaleFactor;
+                        const randomNumY = numberY;
+                        downloadCtx.fillText(randomSixDigitNumber.toString(), randomNumX, randomNumY);
+
+
+                        // Random Quote
+                        const quotes = [
+                            "แชมป์ลีลาศ", "หัวหน้าห้องคิงส์", "หลีดป่วง", "นักเรียนทุน", "แชมป์เป่ากบ",
+                            "แชมป์โต้วาที", "เด็กหลังห้องอันดับ1", "ถูกพักการเรียน", "เด็ก gifted",
+                            "เด็กเส้นลูกอาจารย์", "เด็กวงโย", "ขาเม้าท์ห้องพักครู", "เนิร์ดทอปคณิตศาสตร์",
+                            "ภารโรง", "ลูกรักครูพละ", "นักกีฬาโควตา"
+                        ];
+                        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+                        const originalQuoteFontSize = 20;
+                        const originalQuoteMargin = 60; // Margin from bottom of name
+                        downloadCtx.font = `${originalQuoteFontSize * scaleFactor}px 'Myriad Pro', Arial, sans-serif`;
+                        downloadCtx.fillStyle = "#ffff";
+                        const quoteX = nameX;
+                        const quoteY = nameY + (originalNameFontSize * scaleFactor) + (originalQuoteMargin * scaleFactor); 
+                        downloadCtx.fillText(randomQuote, quoteX, quoteY);
+
+                        // **After drawing on downloadCanvas, copy it to displayCanvas for rendering**
+                        displayCtx.clearRect(0, 0, displayCanvas.width, displayCanvas.height); // Clear display canvas first
+                        displayCtx.drawImage(downloadCanvas, 0, 0, downloadCanvas.width, downloadCanvas.height, 
+                                                            0, 0, displayCanvas.width, displayCanvas.height);
+                    };
+                    photo.src = event.target.result;
+                };
+                reader.readAsDataURL(photoFile);
+            };
+
+            /**
+             * Downloads the generated ID card as a PNG image.
+             * This function is globally accessible for the button's onclick.
+             */
+            window.downloadCard = function() {
+                // Use downloadCanvas for creating the download link (which has the true resolution)
+                if (!downloadCanvas) {
+                    console.error("Download canvas element not found. Cannot download card.");
+                    return;
+                }
+                const link = document.createElement('a');
+                link.download = 'crimsonwood_id_card.png';
+                link.href = downloadCanvas.toDataURL('image/png'); // Use downloadCanvas.toDataURL() to get 401x600 px
+                link.click();
+            };
+
+            // Start the teaser animation as soon as the window loads
+            animateTeaser();
+        };
+    </script>
+</body>
+</html>
