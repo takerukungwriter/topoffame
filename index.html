@@ -395,6 +395,26 @@
             transform: scale(1.05); /* Slightly enlarge on hover */
         }
 
+        /* New style for the YouTube video iframe to make it responsive */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 800px; /* Max width for the video */
+            margin: 20px auto; /* Center the video */
+            border-radius: 10px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -436,17 +456,17 @@
         <img src="warning1.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Warning+Image';" alt="Warning">
         <img src="line.png" class="main-footer-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Line+Image';" alt="Line">
         <img src="topname.png" class="responsive-image" onerror="this.onerror=null;this.src='https://placehold.co/400x100/CCCCCC/000000?text=Top+Name';" alt="Top Name">
-        <br><br>
+
         <div class="video-container">
             <iframe src="https://www.youtube.com/embed/0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <br><br>
+
         <span class="red-bold-text">เป็นเพียงจินตนาการของผู้แต่ง ตัวละคร เหตุการณ์ สถานที่ และแนวคิดต่างๆ ไม่ได้อ้างอิงหรือเกี่ยวข้องกับบุคคลหรือสถานศึกษาใดในชีวิตจริง
             <br>เต็มไปด้วยพฤติกรรมและความคิดของตัวละครที่ไม่เหมาะสม <br> โปรดใช้วิจารณญาณในการอ่าน ไม่เหมาะกับบุคคลอ่อนไหวหรือซึมเศร้า <br>
         เหมาะสำหรับผู้อ่านที่มีอายุ 18 ปีขึ้นไปเท่านั้น</span>
 
         <div class="white-text-box">
-            <center>เรื่องย่อ</center><br>    ดีน คริปสัน นักเรียนทุนนักกีฬาว่ายน้ำ “ชายแท้” ทรงเนิร์ดหล่อ 
+            <center>เรื่องย่อ</center><br>    ดีน คริปสัน นักเรียนทุนนักกีฬาว่ายน้ำ “ชายแท้” ทรงเนิร์ดหล่อ
             ต้องย้ายโรงเรียนในเทอมสุดท้ายมายัง คริมสันวู้ด โรงเรียนชายล้วนของเหล่าผู้ดีที่เป็นประตูสู่มหาวิทยาลัยในฝันของเขา แต่ภายใต้กำแพงหรูของโรงเรียน ดีนกลับพบด้านมืดที่ซ่อนอยู่ นั่นคือตำแหน่ง Hall of Fame ที่ลือกันว่ามีอำนาจลึกลับที่จะบันดาลทุกสิ่งให้กับคนที่ขึ้นไป
             <br>    เจ้าของตำแหน่งนั้นคือ มาร์ค เอเวอร์ตัน ประธานนักเรียนที่เก่งรอบด้านดุจดั่งราชาของที่นี่ คนที่ดีนบังเอิญไปเจอพร้อมถ้วยรางวัลเปื้อนเลือดในมือ
             <br>การพยายามค้นหาและเปิดโปงความจริงทำให้ดีนกลายเป็นศัตรูที่มาร์คต้องจับตามองและจบลงด้วยการกลายเป็น “รูมเมท” ของกันและกันโดยหลีกเลี่ยงไม่ได้ ทางออกของเกมนี้จึงมีแค่สองทาง ไม่ลาออก ก็ต้องโค่นไอ้มาร์คลงจากบัลลังก์ให้ได้
